@@ -90,7 +90,7 @@ export const Navbar = () => {
           </ul>
         </div>
 
-        <Link to="/auth" className="btn text-white bg-[#1EAA96]">
+        <Link to="/auth" className="btn text-white bg-teal-500">
           Join Us
         </Link>
 
