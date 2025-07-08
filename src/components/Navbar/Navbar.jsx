@@ -5,9 +5,11 @@ import { IoGlobeOutline } from "react-icons/io5";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { Link } from "react-router";
 import { LifeMeds } from "../LifeMeds/LifeMeds";
+import { useAuth } from "../../hooks/useAuth";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { user , signOutUser } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -89,33 +91,40 @@ export const Navbar = () => {
             </li>
           </ul>
         </div>
-
-        <Link to="/auth" className="btn text-white bg-teal-500">
-          Join Us
-        </Link>
-
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-9 rounded-full">
-              <img src="https://i.pravatar.cc/300" alt="User" />
+        {user ? (
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="w-10 h-10 border border-teal-500 rounded-full">
+                <img
+                  src={
+                    user?.photoURL ||
+                    "https://i.ibb.co/xJ0gL3k/default-avatar.png"
+                  }
+                  alt="User"
+                />
+              </div>
             </div>
+            <ul className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+              <li>
+                <Link to="/update-profile">Update Profile</Link>
+              </li>
+              <li>
+                <Link to="/dashboard">Dashboard</Link>
+              </li>
+              <li>
+                <button onClick={signOutUser}>Logout</button>
+              </li>
+            </ul>
           </div>
-          <ul className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-            <li>
-              <Link to="/update-profile">Update Profile</Link>
-            </li>
-            <li>
-              <Link to="/dashboard">Dashboard</Link>
-            </li>
-            <li>
-              <button>Logout</button>
-            </li>
-          </ul>
-        </div>
+        ) : (
+          <Link to="/auth" className="btn text-white bg-teal-500">
+            Join Us
+          </Link>
+        )}
       </div>
     </div>
   );
