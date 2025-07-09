@@ -6,12 +6,18 @@ import { useForm } from "react-hook-form";
 import { SocialLogin } from "./SocialLogin";
 import { useAuth } from "../../hooks/useAuth";
 import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
+import { useState } from "react";
+import { Processing } from "../../components/Processing/Processing";
+import { postUserToDB } from "../../utils/postUserToDB";
 
 export const Register = () => {
   const { createUser, userProfileUpdate } = useAuth();
+  const [processing, setProcessing] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state || "/";
+
+  const uploadUserToDB = postUserToDB();
 
   const {
     register,
@@ -21,7 +27,13 @@ export const Register = () => {
 
   const onSubmit = async (data) => {
     try {
+      setProcessing(true);
       const { name, email, password, role, image } = data;
+
+      console.log(data);
+
+      const user = await createUser(email, password);
+      console.log(user);
 
       if (!image || image.length === 0) {
         console.error("No profile image selected.");
@@ -30,13 +42,25 @@ export const Register = () => {
 
       const imageUrl = await uploadToCloudinary(image[0]);
 
-      await createUser(email, password);
-
       await userProfileUpdate({
         displayName: name,
-        photoURL: imageUrl,
+        photoURL: imageUrl || "https://i.ibb.co/PztCdK3s/34653.png",
       });
 
+      const userInfo = {
+        name,
+        email,
+        uid: user.user.uid,
+        photo: imageUrl || "https://i.ibb.co/PztCdK3s/34653.png",
+        role,
+        createdAt: user.user.metadata.creationTime,
+        lastLogin : new Date()
+      };
+
+      const userDB = await uploadUserToDB(userInfo);
+
+      setProcessing(false);
+      console.log("after all complete : ", userDB);
       Swal.fire({
         title: "Registered successfully",
         icon: "success",
@@ -45,16 +69,22 @@ export const Register = () => {
       });
       navigate(from);
     } catch (err) {
+      console.log(err);
+      setProcessing(false);
+      if (err.message === "Firebase: Error (auth/email-already-in-use).") {
+        var messege = "The Email Already Used";
+      }
       Swal.fire({
         icon: "error",
-        title: "Login Failed",
-        text: err.message,
+        title: "Register Failed",
+        text: messege || err.message,
       });
     }
   };
 
   return (
     <div className="space-y-4 w-full md:w-3/4 px-5 md:px-0 lg:px-20">
+      <div>{processing && <Processing />}</div>
       <div className="">
         <h1 className="text-3xl lg:text-4xl font-bold text-teal-600">
           Sign Up to Your Account

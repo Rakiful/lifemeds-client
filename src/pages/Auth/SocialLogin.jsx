@@ -4,16 +4,32 @@ import github from "../../assets/icons/github.jpg";
 import { useAuth } from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import { postUserToDB } from "../../utils/postUserToDB";
 
 export const SocialLogin = () => {
   const { googleSignIn, githubSignIn } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state || "/";
+  const uploadUserToDB = postUserToDB();
 
   const handleLogin = async (providerFn) => {
     try {
-      await providerFn();
+      const result = await providerFn();
+
+      const userInfo = {
+        name: result.user.displayName,
+        email: result.user.email,
+        uid: result.user.uid,
+        photo: result.user.photoURL || "https://i.ibb.co/PztCdK3s/34653.png",
+        role: "User",
+        createdAt: result.user.metadata.creationTime,
+        lastLogin : new Date()
+      };
+      console.log("user info",userInfo)
+
+      const userDB = await uploadUserToDB(userInfo);
+      console.log("after all complete : ", userDB);
       Swal.fire({
         icon: "success",
         title: "Logged in successfully",

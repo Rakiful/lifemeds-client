@@ -6,10 +6,12 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { Link } from "react-router";
 import { LifeMeds } from "../LifeMeds/LifeMeds";
 import { useAuth } from "../../hooks/useAuth";
+import { useTranslation } from "react-i18next";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const { user , signOutUser } = useAuth();
+  const { user, signOutUser } = useAuth();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -20,10 +22,10 @@ export const Navbar = () => {
   const navLinks = (
     <>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/">{t("nav.home")}</NavLink>
       </li>
       <li>
-        <NavLink to="/shop">Shop</NavLink>
+        <NavLink to="/shop">{t("nav.shop")}</NavLink>
       </li>
     </>
   );
@@ -59,8 +61,10 @@ export const Navbar = () => {
             {navLinks}
           </ul>
         </div>
-
+      <div className="w-32">
         <LifeMeds />
+      </div>
+        
       </div>
 
       <div className="navbar-center hidden lg:flex">
@@ -76,20 +80,19 @@ export const Navbar = () => {
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-sm btn-outline flex items-center gap-1"
+            className="btn btn-sm cursor-none btn-outline flex items-center gap-1"
           >
             <IoGlobeOutline />{" "}
-            <span className="hidden md:inline">Language</span>
-            <MdKeyboardArrowDown />
+            <span className="hidden md:inline">
+              <select
+                onChange={(e) => i18n.changeLanguage(e.target.value)}
+                className="pe-5"
+              >
+                <option value="en">English</option>
+                <option value="bn">বাংলা</option>
+              </select>
+            </span>
           </div>
-          <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
-            <li>
-              <button>English</button>
-            </li>
-            <li>
-              <button>বাংলা</button>
-            </li>
-          </ul>
         </div>
         {user ? (
           <div className="dropdown dropdown-end">
