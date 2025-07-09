@@ -2,10 +2,15 @@ import React from "react";
 import { NavLink, Outlet } from "react-router";
 import { FaHome } from "react-icons/fa";
 import { LifeMeds } from "../components/LifeMeds/LifeMeds";
+import { useUserRole } from "../hooks/useUserRole";
+import { Processing } from "../components/Processing/Processing";
 
 export const DashboardLayout = () => {
+  const { role, roleLoading } = useUserRole();
+  console.log(role);
   return (
     <div className="drawer lg:drawer-open">
+      {roleLoading && <Processing />}
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
@@ -56,18 +61,24 @@ export const DashboardLayout = () => {
               Home
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/dashboard/admin/all-users">
-              <FaHome className="inline-block mr-2" />
-              All users
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/admin/all-category">
-              <FaHome className="inline-block mr-2" />
-              All Category
-            </NavLink>
-          </li>
+
+          {/* Admin Links */}
+          {role === "admin" && (
+            <>
+              <li>
+                <NavLink to="/dashboard/admin/all-users">
+                  <FaHome className="inline-block mr-2" />
+                  All users
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/admin/all-category">
+                  <FaHome className="inline-block mr-2" />
+                  All Category
+                </NavLink>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>
