@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Napa Extra",
+    "image": "https://i.ibb.co/v6mdY1z9/napa-extra-500-mg-tablet-46174620412-i1-S6-ON0-Cv84-Db8-Dcl-IKRNt-removebg-preview.png",
+    "description": "Napa Extra is a fast-acting pain reliever used for headaches, muscle pain, and fever reduction.",
+    "sellerEmail": "seller@example.com",
+    "isAdvertised": true
+  },
+  {
+    "name": "Ace +",
+    "image": "https://i.ibb.co/HvQ98RL/0668271-ace-plus-tablet-1-strip-removebg-preview.png",
+    "description": "Ace + provides effective relief from mild to moderate pain and helps reduce inflammation.",
+    "sellerEmail": "seller@example.com",
+    "isAdvertised": true
+  }
+]

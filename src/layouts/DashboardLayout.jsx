@@ -3,14 +3,14 @@ import { NavLink, Outlet } from "react-router";
 import { FaHome } from "react-icons/fa";
 import { LifeMeds } from "../components/LifeMeds/LifeMeds";
 import { useUserRole } from "../hooks/useUserRole";
-import { Processing } from "../components/Processing/Processing";
+// import { Processing } from "../components/Processing/Processing";
 
 export const DashboardLayout = () => {
   const { role, roleLoading } = useUserRole();
   console.log(role);
   return (
     <div className="drawer lg:drawer-open">
-      {roleLoading && <Processing />}
+      {/* {roleLoading && <Processing />} */}
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
