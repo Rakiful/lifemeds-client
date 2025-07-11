@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Tablet",
+    "image": "https://cdn-icons-png.flaticon.com/512/8638/8638176.png",
+    "medicineCount": 18
+  },
+  {
+    "id": 2,
+    "name": "Syrup",
+    "image": "https://cdn-icons-png.flaticon.com/512/4465/4465484.png",
+    "medicineCount": 10
+  },
+  {
+    "id": 3,
+    "name": "Capsule",
+    "image": "https://img.freepik.com/free-vector/medicine-capsule-icon_24911-115957.jpg?semt=ais_hybrid&w=740",
+    "medicineCount": 14
+  },
+  {
+    "id": 4,
+    "name": "Injection",
+    "image": "https://cdn-icons-png.flaticon.com/512/5394/5394374.png",
+    "medicineCount": 7
+  },
+  {
+    "id": 5,
+    "name": "Ointment",
+    "image": "https://cdn-icons-png.flaticon.com/512/3045/3045170.png",
+    "medicineCount": 6
+  },
+  {
+    "id": 6,
+    "name": "Drop",
+    "image": "https://cdn-icons-png.flaticon.com/512/4521/4521670.png",
+    "medicineCount": 9
+  }
+]
