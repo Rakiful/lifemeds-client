@@ -15,10 +15,10 @@ export const CategoryCardSection = () => {
   return (
     <div className="py-10 px-4  mx-auto">
       <div>
-        <h2 className="text-2xl md:text-3xl font-bold text-center">
+        <h1 className="text-2xl text-center lg:text-4xl text-teal-700 font-bold ">
           Browse Categories
-        </h2>
-        <div className="divider w-30 mx-auto divider-accent mb-6"></div>
+        </h1>
+        <hr className="mt-3 mb-5 lg:mt-5 lg:mb-10 w-24 lg:w-40 text-teal-700 border-2 lg:border-3 rounded-2xl mx-auto" />
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
         {categories.map((cat, i) => (
