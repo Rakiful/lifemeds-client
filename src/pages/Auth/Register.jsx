@@ -170,8 +170,8 @@ export const Register = () => {
               className="border border-gray-400 focus:outline-none focus:border-teal-500 w-full py-3 pl-10 rounded-full"
             >
               <option value="">Select Your Role</option>
-              <option value="User">User</option>
-              <option value="Seller">Seller</option>
+              <option value="user">User</option>
+              <option value="seller">Seller</option>
             </select>
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
               <FaLock />

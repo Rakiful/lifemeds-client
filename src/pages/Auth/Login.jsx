@@ -81,8 +81,8 @@ export const Login = () => {
                 required: "Password is required",
                 pattern: {
                   value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/,
-                  message:
-                   "wrong password"},
+                  message: "wrong password",
+                },
               })}
               className="border border-gray-400 focus:outline-none focus:border-teal-500 w-full py-3 pl-10 rounded-full"
             />

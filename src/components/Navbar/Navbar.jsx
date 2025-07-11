@@ -61,10 +61,9 @@ export const Navbar = () => {
             {navLinks}
           </ul>
         </div>
-      <div className="w-32">
-        <LifeMeds />
-      </div>
-        
+        <Link to={"/"} className="w-32">
+          <LifeMeds />
+        </Link>
       </div>
 
       <div className="navbar-center hidden lg:flex">

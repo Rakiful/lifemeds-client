@@ -1,16 +1,14 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
 import { FaHome } from "react-icons/fa";
 import { LifeMeds } from "../components/LifeMeds/LifeMeds";
 import { useUserRole } from "../hooks/useUserRole";
-// import { Processing } from "../components/Processing/Processing";
 
 export const DashboardLayout = () => {
-  const { role, roleLoading } = useUserRole();
+  const { role } = useUserRole();
   console.log(role);
   return (
     <div className="drawer lg:drawer-open">
-      {/* {roleLoading && <Processing />} */}
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
@@ -52,9 +50,9 @@ export const DashboardLayout = () => {
         ></label>
         <ul className="menu bg-teal-500 text-white min-h-full w-[70%] lg:w-80 p-4">
           {/* Sidebar content here */}
-          <div className="w-50 p-5">
+          <Link to={"/"} className="w-50 p-5">
             <LifeMeds />
-          </div>
+          </Link>
           <li className="font-bold text-md">
             <NavLink to="/dashboard">
               <FaHome className="inline-block mr-2" />
@@ -62,13 +60,31 @@ export const DashboardLayout = () => {
             </NavLink>
           </li>
 
+          {/* Seller Links */}
+          {role === "seller" && (
+            <>
+              <li>
+                <NavLink to="/dashboard/admin/manage-users">
+                  <FaHome className="inline-block mr-2" />
+                  Manage Medicines
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/admin/all-category">
+                  <FaHome className="inline-block mr-2" />
+                  All Category
+                </NavLink>
+              </li>
+            </>
+          )}
+
           {/* Admin Links */}
           {role === "admin" && (
             <>
               <li>
-                <NavLink to="/dashboard/admin/all-users">
+                <NavLink to="/dashboard/admin/manage-users">
                   <FaHome className="inline-block mr-2" />
-                  All users
+                  Manage Users
                 </NavLink>
               </li>
               <li>

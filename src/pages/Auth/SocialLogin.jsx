@@ -22,7 +22,7 @@ export const SocialLogin = () => {
         email: result.user.email,
         uid: result.user.uid,
         photo: result.user.photoURL || "https://i.ibb.co/PztCdK3s/34653.png",
-        role: "User",
+        role: "user",
         createdAt: result.user.metadata.creationTime,
         lastLogin : new Date()
       };
