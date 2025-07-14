@@ -21,6 +21,7 @@ export const Cart = () => {
     enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(`/cart/${user.email}`);
+      console.log(res.data)
       const medicinesRes = await axiosSecure.get("/medicines");
       const medicines = medicinesRes.data;
 
@@ -143,6 +144,7 @@ export const Cart = () => {
               <th>Company</th>
               <th>Unit Price</th>
               <th className="text-center">Quantity</th>
+              <th className="text-center">Total</th>
               <th className="text-center">Remove</th>
             </tr>
           </thead>
@@ -169,6 +171,7 @@ export const Cart = () => {
                     <FaMinus />
                   </button>
                 </td>
+                <td className="text-center">${(item.price * item.quantity).toFixed(2)}</td>
                 <td>
                   <div className="flex justify-center">
                     <button
@@ -185,10 +188,12 @@ export const Cart = () => {
           </tbody>
         </table>
 
-        <div className="mt-5 flex justify-between items-center">
-          <p className="text-lg font-semibold">
-            Total: <span className="text-teal-600">${total.toFixed(2)}</span>
+        <div className="mt-5 md:flex justify-between items-center space-y-4">
+          <p className="text-lg md:text-3xl font-semibold">
+            <span className="mr-2">Subtotal:</span>
+            <span className="text-teal-600">${total.toFixed(2)}</span>
           </p>
+
           <div className="flex gap-4">
             <button
               className="btn btn-outline"

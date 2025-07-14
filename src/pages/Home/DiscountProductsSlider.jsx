@@ -27,7 +27,7 @@ export const DiscountProductsSlider = () => {
     <div className="py-10">
       <div>
         <h1 className="text-2xl text-center lg:text-4xl text-teal-700 font-bold ">
-          Discounted Products
+          Discounted Medicines
         </h1>
         <hr className="mt-3 mb-5 lg:mt-5 lg:mb-10 w-24 lg:w-40 text-teal-700 border-2 lg:border-3 rounded-2xl mx-auto" />
       </div>

@@ -14,6 +14,7 @@ import { SellerRoute } from "../routes/SellerRoutes";
 import { ManageMedicines } from "../pages/Dashboard/Seller/ManageMedicines/ManageMedicines";
 import { Shop } from "../pages/Shop/Shop";
 import { Cart } from "../pages/Cart/Cart";
+import { Checkout } from "../pages/Checkout/Checkout";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoutes>
             <Cart />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "/checkout",
+        element: (
+          <PrivateRoutes>
+            <Checkout/>
           </PrivateRoutes>
         ),
       },
