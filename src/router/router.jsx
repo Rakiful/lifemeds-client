@@ -9,6 +9,11 @@ import { DashboardLayout } from "../layouts/DashboardLayout";
 import { PrivateRoutes } from "../routes/PrivateRoutes";
 import { ManageUsers } from "../pages/Dashboard/Admin/ManageUsers";
 import { AdminRoute } from "../routes/AdminRoutes";
+import { Forbidden } from "../components/Forbidden/Forbidden";
+import { SellerRoute } from "../routes/SellerRoutes";
+import { ManageMedicines } from "../pages/Dashboard/Seller/ManageMedicines/ManageMedicines";
+import { Shop } from "../pages/Shop/Shop";
+import { Cart } from "../pages/Cart/Cart";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +23,18 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "/shop",
+        element: <Shop />,
+      },
+      {
+        path: "/cart",
+        element: (
+          <PrivateRoutes>
+            <Cart />
+          </PrivateRoutes>
+        ),
       },
     ],
   },
@@ -59,6 +76,18 @@ export const router = createBrowserRouter([
         path: "seller",
         element: <Register />,
       },
+      {
+        path: "seller/manage-medicines",
+        element: (
+          <SellerRoute>
+            <ManageMedicines />
+          </SellerRoute>
+        ),
+      },
     ],
+  },
+  {
+    path: "/forbidden",
+    element: <Forbidden />,
   },
 ]);

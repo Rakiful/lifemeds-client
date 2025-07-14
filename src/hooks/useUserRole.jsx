@@ -7,7 +7,7 @@ export const useUserRole = () => {
   const axiosSecure = useAxiosSecure();
 
   const {
-    data: role = "user",
+    data: role = "",
     isLoading: roleLoading,
     refetch,
   } = useQuery({

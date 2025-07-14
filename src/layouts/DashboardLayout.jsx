@@ -53,6 +53,7 @@ export const DashboardLayout = () => {
           <Link to={"/"} className="w-50 p-5">
             <LifeMeds />
           </Link>
+
           <li className="font-bold text-md">
             <NavLink to="/dashboard">
               <FaHome className="inline-block mr-2" />
@@ -64,7 +65,7 @@ export const DashboardLayout = () => {
           {role === "seller" && (
             <>
               <li>
-                <NavLink to="/dashboard/admin/manage-users">
+                <NavLink to="/dashboard/seller/manage-medicines">
                   <FaHome className="inline-block mr-2" />
                   Manage Medicines
                 </NavLink>

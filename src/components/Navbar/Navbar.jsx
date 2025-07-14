@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoGlobeOutline } from "react-icons/io5";
-import { MdKeyboardArrowDown } from "react-icons/md";
 import { Link } from "react-router";
 import { LifeMeds } from "../LifeMeds/LifeMeds";
 import { useAuth } from "../../hooks/useAuth";
@@ -10,6 +9,7 @@ import { useTranslation } from "react-i18next";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const { user, signOutUser } = useAuth();
   const { t, i18n } = useTranslation();
 
@@ -18,6 +18,16 @@ export const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      fetch(`http://localhost:3000/cart/count/${user.email}`)
+        .then((resp) => resp.json())
+        .then((data) => {
+          setCartCount(data.count);
+        });
+    }
+  });
 
   const navLinks = (
     <>
@@ -70,10 +80,15 @@ export const Navbar = () => {
         <ul className="menu menu-horizontal px-1 font-medium">{navLinks}</ul>
       </div>
 
-      <div className="navbar-end gap-2">
-        <Link to="/cart" className="btn btn-ghost btn-circle">
-          <FaShoppingCart className="text-xl" />
-        </Link>
+      <div className="navbar-end gap-4">
+        {user && (
+          <Link to="/cart" className="relative">
+            <p className="absolute right-0 -mt-3 -mr-1 text-[11px] w-5 text-white bg-red-500 p-1 rounded-full flex justify-center">
+              {cartCount}
+            </p>
+            <FaShoppingCart className="text-3xl " />
+          </Link>
+        )}
 
         <div className="dropdown dropdown-end">
           <div

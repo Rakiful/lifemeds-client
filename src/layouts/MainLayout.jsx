@@ -1,4 +1,5 @@
 import React from "react";
+import { ToastContainer } from "react-toastify";
 import { Navbar } from "../components/Navbar/Navbar";
 import { Outlet } from "react-router";
 import { Footer } from "../components/Footer/Footer";
@@ -11,6 +12,7 @@ export const MainLayout = () => {
         <Outlet />
       </div>
       <Footer />
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };
