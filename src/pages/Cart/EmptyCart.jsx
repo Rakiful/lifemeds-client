@@ -6,7 +6,7 @@ export const EmptyCart = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 p-40 text-center text-gray-600">
+    <div className="flex flex-col items-center justify-center gap-4 min-h-[80vh] text-center text-gray-600">
       <FaShoppingCart size={80} className="text-gray-400" />
       <h2 className="text-2xl font-semibold">Your cart is empty</h2>
       <p className="max-w-xs">

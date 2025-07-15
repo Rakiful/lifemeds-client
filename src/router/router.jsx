@@ -15,6 +15,7 @@ import { ManageMedicines } from "../pages/Dashboard/Seller/ManageMedicines/Manag
 import { Shop } from "../pages/Shop/Shop";
 import { Cart } from "../pages/Cart/Cart";
 import { Checkout } from "../pages/Checkout/Checkout";
+import { Invoice } from "../pages/Invoice/Invoice";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +43,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoutes>
             <Checkout/>
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "/invoice",
+        element: (
+          <PrivateRoutes>
+            <Invoice/>
           </PrivateRoutes>
         ),
       },

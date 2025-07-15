@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 export const Footer = () => {
   return (
-    <footer className="bg-teal-300 text-black pt-12 pb-6 rounded-2xl mb-10">
+    <footer className="bg-teal-300 text-black pt-12 pb-6 rounded-2xl mb-3">
       <div className="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         {/* My Account */}
         <div>

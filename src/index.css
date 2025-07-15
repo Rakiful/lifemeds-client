@@ -6,3 +6,12 @@
 *{
     font-family: "Roboto", sans-serif;
 }
+
+
+#invoice * {
+  color: #000 !important;
+  background-color: #fff !important;
+  border-color: #ccc !important;
+  box-shadow: none !important;
+  filter: none !important;
+}

@@ -21,7 +21,7 @@ export const Cart = () => {
     enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(`/cart/${user.email}`);
-      console.log(res.data)
+      console.log(res.data);
       const medicinesRes = await axiosSecure.get("/medicines");
       const medicines = medicinesRes.data;
 
@@ -171,7 +171,9 @@ export const Cart = () => {
                     <FaMinus />
                   </button>
                 </td>
-                <td className="text-center">${(item.price * item.quantity).toFixed(2)}</td>
+                <td className="text-center">
+                  ${(item.price * item.quantity).toFixed(2)}
+                </td>
                 <td>
                   <div className="flex justify-center">
                     <button
@@ -187,29 +189,29 @@ export const Cart = () => {
             ))}
           </tbody>
         </table>
+      </div>
 
-        <div className="mt-5 md:flex justify-between items-center space-y-4">
-          <p className="text-lg md:text-3xl font-semibold">
-            <span className="mr-2">Subtotal:</span>
-            <span className="text-teal-600">${total.toFixed(2)}</span>
-          </p>
+      <div className="mt-5 md:flex justify-between items-center space-y-4">
+        <p className="text-lg md:text-3xl font-semibold">
+          <span className="mr-2">Subtotal:</span>
+          <span className="text-teal-600">${total.toFixed(2)}</span>
+        </p>
 
-          <div className="flex gap-4">
-            <button
-              className="btn btn-outline"
-              onClick={handleClearCart}
-              disabled={clearCart.isLoading}
-            >
-              Clear Cart
-            </button>
+        <div className="flex gap-4">
+          <button
+            className="btn btn-outline"
+            onClick={handleClearCart}
+            disabled={clearCart.isLoading}
+          >
+            Clear Cart
+          </button>
 
-            <button
-              className="btn bg-teal-500 hover:bg-teal-700 text-white"
-              onClick={() => navigate("/checkout")}
-            >
-              Checkout
-            </button>
-          </div>
+          <button
+            className="btn bg-teal-500 hover:bg-teal-700 text-white"
+            onClick={() => navigate("/checkout")}
+          >
+            Checkout
+          </button>
         </div>
       </div>
     </div>

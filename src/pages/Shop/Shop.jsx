@@ -57,7 +57,7 @@ export const Shop = () => {
 
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full text-sm">
-          <thead>
+          <thead className="bg-teal-500 text-white">
             <tr>
               <th>#</th>
               <th>Name</th>

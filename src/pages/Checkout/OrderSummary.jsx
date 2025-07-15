@@ -30,13 +30,13 @@ export const OrderSummary = () => {
     },
   });
 
-  console.log(cartItems)
+  console.log(cartItems);
 
   return (
     <div>
       <div className="overflow-x-auto">
         <table className="table">
-          <thead>
+          <thead className="bg-teal-100 ">
             <tr>
               <th>Name</th>
               <th>Company</th>
@@ -63,12 +63,15 @@ export const OrderSummary = () => {
         </table>
       </div>
 
-      <p className="text-sm text-gray-600">
-        You have {cartItems.length} items in cart.
-      </p>
-      <p className="text-base font-medium">
-        Total: ${cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)}
-      </p>
+      <div className="flex flex-col justify-end items-end mt-5 gap-3">
+        <p className="text-lg text-gray-600">
+          You have {cartItems.length} items in cart.
+        </p>
+        <p className="text-xl md:text-2xl font-bold">
+          Subtotal: $
+          {cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)}
+        </p>
+      </div>
     </div>
   );
 };

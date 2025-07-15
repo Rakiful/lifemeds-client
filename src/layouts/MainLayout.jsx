@@ -8,7 +8,7 @@ export const MainLayout = () => {
   return (
     <div className="container mx-auto px-2">
       <Navbar />
-      <div className="min-h-[80vh]">
+      <div className="min-h-[85vh]">
         <Outlet />
       </div>
       <Footer />

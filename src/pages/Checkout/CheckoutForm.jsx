@@ -1,5 +1,3 @@
-// ==== React Checkout Component with Stripe + DB Post ====
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/useAuth";
@@ -8,6 +6,10 @@ import { useAxiosSecure } from "../../hooks/useAxiosSecure";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { toast } from "react-toastify";
 import { Navigate, useNavigate } from "react-router";
+import Swal from "sweetalert2";
+import payment_methods from "../../assets/icons/payment_methods.jpg";
+import stripe_logo from "../../assets/icons/stripe.png";
+import { Loading } from "../../components/Loading/Loading";
 
 export const CheckoutForm = () => {
   const { user } = useAuth();
@@ -24,7 +26,7 @@ export const CheckoutForm = () => {
     defaultValues: { name: user?.displayName, email: user?.email },
   });
 
-  const { data: cartItems = [] } = useQuery({
+  const { data: cartItems = [],isLoading  } = useQuery({
     queryKey: ["cart", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -79,14 +81,23 @@ export const CheckoutForm = () => {
 
       if (result.error) {
         toast.error(result.error.message);
+        Swal.fire({
+          icon: "error",
+          title: "Payment Failed",
+          text: result.error.message,
+        });
       } else if (result.paymentIntent.status === "succeeded") {
         const cartData = await axiosSecure.get(`/cart/${user.email}`);
-
+        const medicinesRes = await axiosSecure.get("/medicines");
+        const medicines = medicinesRes.data;
         const newCartData = [];
         for (const cart of cartData.data) {
+          const medicine = medicines.find((m) => m._id === cart.medicineId);
           const newCart = {
             cartId: cart._id,
             medicineId: cart.medicineId,
+            medicineName: medicine?.name || "Unknown",
+            price: medicine?.price || 0,
             quantity: cart.quantity,
           };
           newCartData.push(newCart);
@@ -103,58 +114,105 @@ export const CheckoutForm = () => {
           paymentStatus: "pending",
           orderDate: new Date(),
         };
+
         console.log(orderData);
 
         const dbOrder = await axiosSecure.post("/orders", orderData);
         console.log(dbOrder);
         if (dbOrder) {
-          toast.success("Order placed successfully!");
-          navigate("/invoice");
+          Swal.fire({
+            title: "Order placed successfully!",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+          });
+
+          navigate("/invoice", { state: orderData });
         }
       }
     } catch (err) {
-      toast.error("Checkout failed");
+      Swal.fire({
+        icon: "error",
+        title: "Checkout failed",
+        text: err.message,
+      });
     }
   };
+
+  if(isLoading){
+    return <Loading/>
+  }
 
   if (cartItems.length === 0) {
     return <Navigate to={"/cart"}></Navigate>;
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow">
-      <h2 className="text-xl font-bold mb-4">Complete Your Payment</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <input
-          {...register("name", { required: true })}
-          placeholder="Name"
-          className="input input-bordered w-full"
-        />
-        <input
-          {...register("email", { required: true })}
-          placeholder="Email"
-          className="input input-bordered w-full"
-          readOnly
-        />
-        <input
-          {...register("phone", { required: true })}
-          placeholder="Phone"
-          className="input input-bordered w-full"
-        />
-        <input
-          {...register("address", { required: true })}
-          placeholder="Address"
-          className="input input-bordered w-full"
-        />
+    <div className="max-w-3xl mx-auto p-6 bg-teal-100 rounded-lg shadow">
+      <div className="flex justify-between items-center mb-5">
+        <img className="w-20 md:w-30" src={stripe_logo} alt="" />
+        <img className="w-40 md:w-60" src={payment_methods} alt="" />
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 grid md:grid-cols-2 gap-4">
+        <div>
+          <label>Name <span className="text-red-600">*</span></label>
+          <input
+            {...register("name", { required: "Name is required" })}
+            placeholder="Name"
+            className="input input-bordered w-full bg-transparent"
+          />
+          {errors.name && (
+            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+          )}
+        </div>
 
-        <div className="p-2 border rounded">
-          <CardElement />
+        <div>
+          <label>Email <span className="text-red-600">*</span></label>
+          <input
+            {...register("email", { required: "Email is required" })}
+            placeholder="Email"
+            className="input input-bordered w-full bg-transparent"
+            readOnly
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+          )}
+        </div>
+
+        <div>
+          <label>Phone <span className="text-red-600">*</span></label>
+          <input
+            {...register("phone", { required: "Phone is required" })}
+            placeholder="Phone"
+            className="input input-bordered w-full bg-transparent"
+          />
+          {errors.phone && (
+            <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+          )}
+        </div>
+
+        <div>
+          <label>Address <span className="text-red-600">*</span></label>
+          <input
+            {...register("address", { required: "Address is required" })}
+            placeholder="Address"
+            className="input input-bordered w-full bg-transparent"
+          />
+          {errors.address && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.address.message}
+            </p>
+          )}
+        </div>
+
+        <div className="p-2 border rounded md:col-span-2">
+          <CardElement className="p-3 text-2xl"/>
         </div>
 
         <button
           type="submit"
           disabled={!stripe}
-          className="btn btn-primary w-full mt-4"
+          className="btn bg-teal-500 text-white hover:bg-teal-700 w-full mt-4 md:col-span-2"
         >
           Pay ${total.toFixed(2)}
         </button>
