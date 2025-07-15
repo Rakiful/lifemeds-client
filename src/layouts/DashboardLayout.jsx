@@ -71,6 +71,12 @@ export const DashboardLayout = () => {
                 </NavLink>
               </li>
               <li>
+                <NavLink to="/dashboard/seller/payment-history">
+                  <FaHome className="inline-block mr-2" />
+                  Payment History
+                </NavLink>
+              </li>
+              <li>
                 <NavLink to="/dashboard/admin/all-category">
                   <FaHome className="inline-block mr-2" />
                   All Category
@@ -86,6 +92,12 @@ export const DashboardLayout = () => {
                 <NavLink to="/dashboard/admin/manage-users">
                   <FaHome className="inline-block mr-2" />
                   Manage Users
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/admin/payment-management">
+                  <FaHome className="inline-block mr-2" />
+                  Payment Management
                 </NavLink>
               </li>
               <li>

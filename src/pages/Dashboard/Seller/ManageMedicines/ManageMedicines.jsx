@@ -41,7 +41,7 @@ export const ManageMedicines = () => {
       </div>
 
       {/* Placeholder table */}
-      <div className="text-center italic text-gray-500">
+      <div className="text-center">
         <div className="overflow-x-auto shadow-md rounded-lg border border-gray-200">
           <table className="table table-zebra w-full text-sm">
             <thead className="bg-teal-500 text-white">

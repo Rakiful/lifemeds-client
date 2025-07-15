@@ -16,6 +16,8 @@ import { Shop } from "../pages/Shop/Shop";
 import { Cart } from "../pages/Cart/Cart";
 import { Checkout } from "../pages/Checkout/Checkout";
 import { Invoice } from "../pages/Invoice/Invoice";
+import { PaymentManagement } from "../pages/Dashboard/Admin/PaymentManagement";
+import { PaymentHistory } from "../pages/Dashboard/Seller/PaymentHistory";
 
 export const router = createBrowserRouter([
   {
@@ -42,7 +44,7 @@ export const router = createBrowserRouter([
         path: "/checkout",
         element: (
           <PrivateRoutes>
-            <Checkout/>
+            <Checkout />
           </PrivateRoutes>
         ),
       },
@@ -50,7 +52,7 @@ export const router = createBrowserRouter([
         path: "/invoice",
         element: (
           <PrivateRoutes>
-            <Invoice/>
+            <Invoice />
           </PrivateRoutes>
         ),
       },
@@ -91,6 +93,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "admin/payment-management",
+        element: (
+          <AdminRoute>
+            <PaymentManagement />
+          </AdminRoute>
+        ),
+      },
+      {
         path: "seller",
         element: <Register />,
       },
@@ -99,6 +109,14 @@ export const router = createBrowserRouter([
         element: (
           <SellerRoute>
             <ManageMedicines />
+          </SellerRoute>
+        ),
+      },
+      {
+        path: "seller/payment-history",
+        element: (
+          <SellerRoute>
+            <PaymentHistory/>
           </SellerRoute>
         ),
       },
