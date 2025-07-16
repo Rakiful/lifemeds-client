@@ -6,7 +6,7 @@ export const CategoryCardSection = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("/categories.json")
+    fetch("http://localhost:3000/categories")
       .then((res) => res.json())
       .then((data) => setCategories(data))
       .catch((err) => console.error("Error fetching categories:", err));
@@ -28,11 +28,11 @@ export const CategoryCardSection = () => {
             className="border border-teal-200 rounded-xl shadow hover:shadow-lg shadow-teal-200 cursor-pointer p-4 flex flex-col items-center transition"
           >
             <img
-              src={cat.image}
-              alt={cat.name}
+              src={cat.categoryImage}
+              alt={cat.categoryName}
               className="w-20 h-20 object-contain mb-3"
             />
-            <h3 className="text-lg font-semibold">{cat.name}</h3>
+            <h3 className="text-lg font-semibold">{cat.categoryName}</h3>
             <p className="text-sm text-gray-500">
               {cat.medicineCount} medicines
             </p>

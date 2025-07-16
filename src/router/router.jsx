@@ -18,6 +18,10 @@ import { Checkout } from "../pages/Checkout/Checkout";
 import { Invoice } from "../pages/Invoice/Invoice";
 import { PaymentManagement } from "../pages/Dashboard/Admin/PaymentManagement";
 import { PaymentHistory } from "../pages/Dashboard/Seller/PaymentHistory";
+import { UserRoutes } from "../routes/UserRoutes";
+import { UserPaymentHistory } from "../pages/Dashboard/User/UserPaymentHistory";
+import { ManageCategory } from "../pages/Dashboard/Admin/ManageCategory";
+import { AskAdvertisement } from "../pages/Dashboard/Seller/AskAdvertisement";
 
 export const router = createBrowserRouter([
   {
@@ -101,6 +105,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "admin/manage-category",
+        element: (
+          <AdminRoute>
+            <ManageCategory />
+          </AdminRoute>
+        ),
+      },
+      {
         path: "seller",
         element: <Register />,
       },
@@ -116,8 +128,28 @@ export const router = createBrowserRouter([
         path: "seller/payment-history",
         element: (
           <SellerRoute>
-            <PaymentHistory/>
+            <PaymentHistory />
           </SellerRoute>
+        ),
+      },
+      {
+        path: "seller/ask-advertisement",
+        element: (
+          <SellerRoute>
+            <AskAdvertisement />
+          </SellerRoute>
+        ),
+      },
+      {
+        path: "user",
+        element: <Register />,
+      },
+      {
+        path: "user/payment-history",
+        element: (
+          <UserRoutes>
+            <UserPaymentHistory />
+          </UserRoutes>
         ),
       },
     ],

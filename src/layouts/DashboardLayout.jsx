@@ -60,6 +60,16 @@ export const DashboardLayout = () => {
               Home
             </NavLink>
           </li>
+          {role === "user" && (
+            <>
+              <li>
+                <NavLink to="/dashboard/user/payment-history">
+                  <FaHome className="inline-block mr-2" />
+                  Payment History
+                </NavLink>
+              </li>
+            </>
+          )}
 
           {/* Seller Links */}
           {role === "seller" && (
@@ -77,9 +87,9 @@ export const DashboardLayout = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/admin/all-category">
+                <NavLink to="/dashboard/seller/ask-advertisement">
                   <FaHome className="inline-block mr-2" />
-                  All Category
+                  Ask For Advertisement
                 </NavLink>
               </li>
             </>
@@ -101,9 +111,9 @@ export const DashboardLayout = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/admin/all-category">
+                <NavLink to="/dashboard/admin/manage-category">
                   <FaHome className="inline-block mr-2" />
-                  All Category
+                  Manage Category
                 </NavLink>
               </li>
             </>

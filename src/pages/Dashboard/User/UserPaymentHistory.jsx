@@ -6,14 +6,14 @@ import { useAuth } from "../../../hooks/useAuth";
 import dayjs from "dayjs";
 import { NoPaymentHistory } from "../../../components/NoPaymentHistory/NoPaymentHistory.jsx";
 
-export const PaymentHistory = () => {
+export const UserPaymentHistory = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
   const { data: payments = [], isLoading } = useQuery({
-    queryKey: ["seller-payments", user.email],
+    queryKey: ["user-payments", user.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/seller/payments/${user.email}`);
+      const res = await axiosSecure.get(`/user/payments/${user.email}`);
       return res.data;
     },
   });
@@ -34,8 +34,6 @@ export const PaymentHistory = () => {
               <th>#</th>
               <th>Buyer Name</th>
               <th>Buyer Email</th>
-              <th>Medicine ID</th>
-              <th>Quantity</th>
               <th>Total</th>
               <th>Transaction ID</th>
               <th>Order Date</th>
@@ -48,20 +46,12 @@ export const PaymentHistory = () => {
                 <td>{index + 1}</td>
                 <td>{payment.buyerName}</td>
                 <td>{payment.buyerEmail}</td>
-                <td>{payment.medicineId}</td>
-                <td>{payment.quantity}</td>
                 <td>${payment.total.toFixed(2)}</td>
                 <td>{payment.transactionId}</td>
                 <td>{dayjs(payment.orderDate).format("YYYY-MM-DD hh:mm A")}</td>
                 <td>
-                  <span
-                    className={`px-2 py-1 rounded text-white ${
-                      payment.paymentStatus === "paid"
-                        ? "bg-green-600"
-                        : "bg-yellow-500"
-                    }`}
-                  >
-                    {payment.paymentStatus}
+                  <span className={`px-2 py-1 rounded text-white bg-green-600`}>
+                    {payment.transactionId && "PAID"}
                   </span>
                 </td>
               </tr>

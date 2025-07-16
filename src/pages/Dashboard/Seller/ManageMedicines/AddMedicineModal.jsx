@@ -99,8 +99,8 @@ export const AddMecineModal = ({ refetch }) => {
             >
               <option value="">Select Category</option>
               {categories.map((cat, i) => (
-                <option key={i} value={cat}>
-                  {cat}
+                <option key={i} value={cat.categoryName}>
+                  {cat.categoryName}
                 </option>
               ))}
             </select>
