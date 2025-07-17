@@ -116,6 +116,12 @@ export const DashboardLayout = () => {
                   Manage Category
                 </NavLink>
               </li>
+              <li>
+                <NavLink to="/dashboard/admin/manage-advertisement">
+                  <FaHome className="inline-block mr-2" />
+                  Manage Advertisement
+                </NavLink>
+              </li>
             </>
           )}
         </ul>

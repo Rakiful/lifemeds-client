@@ -4,9 +4,11 @@ import { AddMecineModal } from "./AddMedicineModal";
 import { FaPlusCircle } from "react-icons/fa";
 import { useAxiosSecure } from "../../../../hooks/useAxiosSecure";
 import { Loading } from "../../../../components/Loading/Loading";
+import { useAuth } from "../../../../hooks/useAuth";
 
 export const ManageMedicines = () => {
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
 
   // Fetch all medicines
   const {
@@ -16,7 +18,7 @@ export const ManageMedicines = () => {
   } = useQuery({
     queryKey: ["medicines"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/medicines");
+      const res = await axiosSecure.get(`/medicines/${user.email}`);
       return res.data;
     },
   });

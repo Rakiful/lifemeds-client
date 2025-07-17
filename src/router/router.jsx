@@ -22,6 +22,7 @@ import { UserRoutes } from "../routes/UserRoutes";
 import { UserPaymentHistory } from "../pages/Dashboard/User/UserPaymentHistory";
 import { ManageCategory } from "../pages/Dashboard/Admin/ManageCategory";
 import { AskAdvertisement } from "../pages/Dashboard/Seller/AskAdvertisement";
+import { ManageAdvertisement } from "../pages/Dashboard/Admin/ManageAdvertisement";
 
 export const router = createBrowserRouter([
   {
@@ -109,6 +110,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageCategory />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin/manage-advertisement",
+        element: (
+          <AdminRoute>
+            <ManageAdvertisement/>
           </AdminRoute>
         ),
       },

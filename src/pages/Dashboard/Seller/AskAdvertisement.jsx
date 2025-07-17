@@ -26,6 +26,7 @@ export const AskAdvertisement = () => {
   const handleAddAd = async (e) => {
     e.preventDefault();
     const form = e.target;
+    const medicineName = form.medicineName.value.trim();
     const medicineImage = form.medicineImage.value.trim();
     const description = form.description.value.trim();
 
@@ -37,6 +38,7 @@ export const AskAdvertisement = () => {
     const adData = {
       sellerEmail: user.email,
       medicineImage,
+      medicineName,
       description,
       createdAt: new Date(),
     };
@@ -175,9 +177,16 @@ export const AskAdvertisement = () => {
           </h3>
           <form onSubmit={handleAddAd} className="grid grid-cols-1 gap-4">
             <input
+              name="medicineName"
+              type="text"
+              placeholder="Advertisement Medicine Name"
+              className="input input-bordered"
+              required
+            />
+            <input
               name="medicineImage"
               type="url"
-              placeholder="Advertisement Image URL"
+              placeholder="Advertisement Medicine Image URL"
               className="input input-bordered"
               required
             />
