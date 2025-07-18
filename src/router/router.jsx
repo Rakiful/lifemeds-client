@@ -25,6 +25,7 @@ import { AskAdvertisement } from "../pages/Dashboard/Seller/AskAdvertisement";
 import { ManageAdvertisement } from "../pages/Dashboard/Admin/ManageAdvertisement";
 import { Category } from "../pages/Category/Category";
 import { SalesReport } from "../pages/Dashboard/Admin/SalesReport";
+import { AdminHome } from "../pages/Dashboard/Admin/AdminHome";
 
 export const router = createBrowserRouter([
   {
@@ -93,7 +94,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "admin",
-        element: <Login />,
+        element: <AdminHome />,
       },
       {
         path: "admin/manage-users",
@@ -123,7 +124,7 @@ export const router = createBrowserRouter([
         path: "admin/manage-advertisement",
         element: (
           <AdminRoute>
-            <ManageAdvertisement/>
+            <ManageAdvertisement />
           </AdminRoute>
         ),
       },
@@ -131,7 +132,7 @@ export const router = createBrowserRouter([
         path: "admin/sales-report",
         element: (
           <AdminRoute>
-            <SalesReport/>
+            <SalesReport />
           </AdminRoute>
         ),
       },

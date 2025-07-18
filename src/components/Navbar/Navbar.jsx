@@ -6,11 +6,13 @@ import { Link } from "react-router";
 import { LifeMeds } from "../LifeMeds/LifeMeds";
 import { useAuth } from "../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
+import { useUserRole } from "../../hooks/useUserRole";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const { user, signOutUser } = useAuth();
+  const { role } = useUserRole();
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -130,7 +132,7 @@ export const Navbar = () => {
                 <Link to="/update-profile">Update Profile</Link>
               </li>
               <li>
-                <Link to="/dashboard">Dashboard</Link>
+                <Link to={`/dashboard/${role}`}>Dashboard</Link>
               </li>
               <li>
                 <button onClick={signOutUser}>Logout</button>
