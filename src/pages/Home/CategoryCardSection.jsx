@@ -24,7 +24,7 @@ export const CategoryCardSection = () => {
         {categories.map((cat, i) => (
           <div
             key={i}
-            onClick={() => navigate(`/category/${cat.name.toLowerCase()}`)}
+            onClick={() => navigate(`/category/${cat.categoryName}`)}
             className="border border-teal-200 rounded-xl shadow hover:shadow-lg shadow-teal-200 cursor-pointer p-4 flex flex-col items-center transition"
           >
             <img

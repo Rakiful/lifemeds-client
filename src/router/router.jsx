@@ -23,6 +23,8 @@ import { UserPaymentHistory } from "../pages/Dashboard/User/UserPaymentHistory";
 import { ManageCategory } from "../pages/Dashboard/Admin/ManageCategory";
 import { AskAdvertisement } from "../pages/Dashboard/Seller/AskAdvertisement";
 import { ManageAdvertisement } from "../pages/Dashboard/Admin/ManageAdvertisement";
+import { Category } from "../pages/Category/Category";
+import { SalesReport } from "../pages/Dashboard/Admin/SalesReport";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: "/shop",
         element: <Shop />,
+      },
+      {
+        path: "/category/:categoryName",
+        element: <Category />,
       },
       {
         path: "/cart",
@@ -118,6 +124,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageAdvertisement/>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin/sales-report",
+        element: (
+          <AdminRoute>
+            <SalesReport/>
           </AdminRoute>
         ),
       },
