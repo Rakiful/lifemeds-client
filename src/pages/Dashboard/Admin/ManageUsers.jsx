@@ -60,8 +60,8 @@ export const ManageUsers = () => {
         </h1>
         <hr className="mt-3 mb-5 lg:mt-5 lg:mb-10 w-24 lg:w-40 text-teal-700 border-2 lg:border-3 rounded-2xl mx-auto" />
       </div>
-      <div className="overflow-x-auto">
-        <table className="table w-full border border-teal-200">
+      <div className="overflow-x-auto shadow-md rounded-lg border border-gray-200">
+        <table className="table table-zebra w-full text-sm">
           <thead className="bg-teal-500 text-white">
             <tr>
               <th>#</th>
