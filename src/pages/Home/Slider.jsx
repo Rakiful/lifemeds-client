@@ -9,8 +9,7 @@ export const Slider = () => {
   const [slides, setSlides] = useState([]);
 
   useEffect(() => {
-    // fetch("http://localhost:3000/medicines/advertised")
-    fetch("/slider.json")
+    fetch("http://localhost:3000/advertisements/slider")
       .then((res) => res.json())
       .then((data) => setSlides(data))
       .catch((err) => console.error("Error fetching slides:", err));
@@ -24,7 +23,7 @@ export const Slider = () => {
         pagination={{ clickable: true }}
         autoplay={{ delay: 3000 }}
         modules={[Pagination, Autoplay]}
-        loop={true}
+        loop={slides.length > 1 && true}
         className="rounded-xl overflow-hidden"
       >
         {slides.map((item) => (
@@ -32,7 +31,9 @@ export const Slider = () => {
             <div className="w-full h-[80vh] from-teal-400 bg-gradient-to-br bg-teal-100 flex items-center justify-center">
               <div className="md:mt-[-60px] bg-opacity-40 space-y-4 flex flex-col p-4">
                 <LifeMeds />
-                <h2 className="text-2xl md:text-5xl font-bold">{item.name}</h2>
+                <h2 className="text-2xl md:text-5xl font-bold">
+                  {item.medicineName}
+                </h2>
                 <p className="text-sm md:text-base text-gray-600 max-w-xl">
                   {item.description}
                 </p>
@@ -45,8 +46,8 @@ export const Slider = () => {
               <div className="flex justify-center items-center">
                 <div>
                   <img
-                    src={item.image}
-                    alt={item.name}
+                    src={item.medicineImage}
+                    alt={item.medicineName}
                     className="object-cover w-full h-full"
                   />
                 </div>
