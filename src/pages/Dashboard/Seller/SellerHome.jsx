@@ -17,6 +17,7 @@ import {
 } from "react-icons/fa";
 import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
 import { useAuth } from "../../../hooks/useAuth";
+import { Helmet } from "react-helmet-async";
 
 export const SellerHome = () => {
   const { user } = useAuth();
@@ -71,6 +72,9 @@ export const SellerHome = () => {
 
   return (
     <div className="p-5">
+      <Helmet>
+        <title>Seller Dashboard | LifeMeds</title>
+      </Helmet>
       <div>
         <h1 className="text-2xl text-center lg:text-4xl text-black font-bold">
           📊 Seller Dashboard Overview
@@ -104,7 +108,9 @@ export const SellerHome = () => {
         <div className="bg-white shadow-md rounded-xl p-6 flex items-center gap-3">
           <FaCapsules className="text-2xl md:text-5xl text-red-500" />
           <div>
-            <h4 className="text-sm md:text-lg font-semibold">Top Selling Medicine</h4>
+            <h4 className="text-sm md:text-lg font-semibold">
+              Top Selling Medicine
+            </h4>
             {topSelling ? (
               <>
                 <p className="text-lg">

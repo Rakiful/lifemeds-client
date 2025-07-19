@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/useAuth";
 import { SocialLogin } from "./SocialLogin";
+import { Helmet } from "react-helmet-async";
 
 export const Login = () => {
   const { signInUser } = useAuth();
@@ -41,6 +42,9 @@ export const Login = () => {
 
   return (
     <div className="space-y-4 w-full md:w-3/4 px-5 lg:px-20">
+      <Helmet>
+        <title>LogIn | LifeMeds</title>
+      </Helmet>
       <div>
         <h1 className="text-3xl lg:text-4xl font-bold text-teal-600">
           Sign in to Your Account

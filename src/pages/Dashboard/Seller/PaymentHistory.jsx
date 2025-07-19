@@ -5,6 +5,7 @@ import { Loading } from "../../../components/Loading/Loading";
 import { useAuth } from "../../../hooks/useAuth";
 import dayjs from "dayjs";
 import { NoPaymentHistory } from "../../../components/NoPaymentHistory/NoPaymentHistory.jsx";
+import { Helmet } from "react-helmet-async";
 
 export const PaymentHistory = () => {
   const { user } = useAuth();
@@ -22,6 +23,9 @@ export const PaymentHistory = () => {
 
   return (
     <div className="p-6">
+      <Helmet>
+        <title>Payment History | LifeMeds</title>
+      </Helmet>
       <h1 className="text-2xl text-center lg:text-4xl text-teal-700 font-bold">
         Payment History
       </h1>

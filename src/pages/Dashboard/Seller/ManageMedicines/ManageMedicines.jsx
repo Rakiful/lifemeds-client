@@ -14,6 +14,7 @@ import { Loading } from "../../../../components/Loading/Loading";
 import { useAuth } from "../../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { EditMecineModal } from "./EditMedicineModal";
+import { Helmet } from "react-helmet-async";
 
 export const ManageMedicines = () => {
   const [selectedMedicine, setSelectedMedicine] = useState({});
@@ -82,6 +83,9 @@ export const ManageMedicines = () => {
 
   return (
     <div className="p-4">
+      <Helmet>
+        <title>Manage Medicines | LifeMeds</title>
+      </Helmet>
       <div>
         <h1 className="text-2xl text-center lg:text-4xl text-teal-700 font-bold ">
           Manage Medicines

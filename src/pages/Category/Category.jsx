@@ -18,6 +18,7 @@ import { useAxiosSecure } from "../../hooks/useAxiosSecure";
 import { Loading } from "../../components/Loading/Loading";
 import { useAuth } from "../../hooks/useAuth";
 import { useParams } from "react-router";
+import { Helmet } from "react-helmet-async";
 
 export const Category = () => {
   const [selectedMedicine, setSelectedMedicine] = useState(null);
@@ -61,7 +62,8 @@ export const Category = () => {
   if (isLoading) return <Loading />;
 
   const filtered = medicines.filter((med) => {
-    const target = `${med.medicineName} ${med.genericName} ${med.company}`.toLowerCase();
+    const target =
+      `${med.medicineName} ${med.genericName} ${med.company}`.toLowerCase();
     return target.includes(searchTerm.toLowerCase());
   });
 
@@ -77,6 +79,9 @@ export const Category = () => {
 
   return (
     <div className="p-4">
+      <Helmet>
+        <title>{categoryName} Category | LifeMeds</title>
+      </Helmet>
       <div>
         <h1 className="text-2xl text-center lg:text-4xl text-teal-700 font-bold ">
           <p className="capitalize">{categoryName} Category</p>
@@ -130,7 +135,11 @@ export const Category = () => {
               <tr key={item._id}>
                 <td>{(currentPage - 1) * itemsPerPage + idx + 1}</td>
                 <td className="flex items-center gap-2">
-                  <img src={item.medicineImage} alt={item.medicineName} className="w-10" />
+                  <img
+                    src={item.medicineImage}
+                    alt={item.medicineName}
+                    className="w-10"
+                  />
                   <p>{item.medicineName}</p>
                 </td>
                 <td>{item.genericName}</td>
@@ -206,27 +215,33 @@ export const Category = () => {
               <div className="w-full text-sm md:text-base space-y-3 text-gray-700">
                 <p className="flex items-center gap-2">
                   <FaNotesMedical className="text-teal-500" />
-                  <span className="font-medium">Generic Name:</span> {selectedMedicine.genericName}
+                  <span className="font-medium">Generic Name:</span>{" "}
+                  {selectedMedicine.genericName}
                 </p>
                 <p className="flex items-center gap-2">
                   <FaTags className="text-teal-500" />
-                  <span className="font-medium">Category:</span> {selectedMedicine.category}
+                  <span className="font-medium">Category:</span>{" "}
+                  {selectedMedicine.category}
                 </p>
                 <p className="flex items-center gap-2">
                   <FaRegBuilding className="text-teal-500" />
-                  <span className="font-medium">Company:</span> {selectedMedicine.company}
+                  <span className="font-medium">Company:</span>{" "}
+                  {selectedMedicine.company}
                 </p>
                 <p className="flex items-center gap-2">
                   <FaSyringe className="text-teal-500" />
-                  <span className="font-medium">Unit:</span> {selectedMedicine.unit}
+                  <span className="font-medium">Unit:</span>{" "}
+                  {selectedMedicine.unit}
                 </p>
                 <p className="flex items-center gap-2">
                   <FaDollarSign className="text-teal-500" />
-                  <span className="font-medium">Price:</span> ${selectedMedicine.price}
+                  <span className="font-medium">Price:</span> $
+                  {selectedMedicine.price}
                 </p>
                 <p className="flex items-center gap-2">
                   <FaPercentage className="text-teal-500" />
-                  <span className="font-medium">Discount:</span> {selectedMedicine.discount}%
+                  <span className="font-medium">Discount:</span>{" "}
+                  {selectedMedicine.discount}%
                 </p>
               </div>
             </div>

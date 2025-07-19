@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { FaTrash, FaEdit, FaPlusCircle } from "react-icons/fa";
 import { Loading } from "../../../components/Loading/Loading";
 import { useForm } from "react-hook-form";
+import { Helmet } from "react-helmet-async";
 
 export const ManageCategory = () => {
   const axiosSecure = useAxiosSecure();
@@ -109,6 +110,9 @@ export const ManageCategory = () => {
 
   return (
     <div className="p-4">
+      <Helmet>
+        <title>Manage Category | LifeMeds</title>
+      </Helmet>
       {/* Title */}
       <div>
         <h1 className="text-2xl text-center lg:text-4xl text-teal-700 font-bold">

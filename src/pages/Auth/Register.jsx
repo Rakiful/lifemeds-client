@@ -9,6 +9,7 @@ import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
 import { useState } from "react";
 import { Processing } from "../../components/Processing/Processing";
 import { postUserToDB } from "../../utils/postUserToDB";
+import { Helmet } from "react-helmet-async";
 
 export const Register = () => {
   const { createUser, userProfileUpdate } = useAuth();
@@ -54,7 +55,7 @@ export const Register = () => {
         photo: imageUrl || "https://i.ibb.co/PztCdK3s/34653.png",
         role,
         createdAt: user.user.metadata.creationTime,
-        lastLogin : new Date()
+        lastLogin: new Date(),
       };
 
       const userDB = await uploadUserToDB(userInfo);
@@ -84,6 +85,9 @@ export const Register = () => {
 
   return (
     <div className="space-y-4 w-full md:w-3/4 px-5 md:px-0 lg:px-20">
+      <Helmet>
+        <title>Register| LifeMeds</title>
+      </Helmet>
       <div>{processing && <Processing />}</div>
       <div className="">
         <h1 className="text-3xl lg:text-4xl font-bold text-teal-600">

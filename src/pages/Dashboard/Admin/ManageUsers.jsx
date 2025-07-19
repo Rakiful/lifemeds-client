@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { FaUser, FaUserTie, FaUserShield } from "react-icons/fa";
 import { Loading } from "../../../components/Loading/Loading";
 import { useAuth } from "../../../hooks/useAuth";
+import { Helmet } from "react-helmet-async";
 
 export const ManageUsers = () => {
   const { user } = useAuth();
@@ -54,6 +55,9 @@ export const ManageUsers = () => {
 
   return (
     <div className="p-6">
+      <Helmet>
+        <title>Manage Users | LifeMeds</title>
+      </Helmet>
       <div>
         <h1 className="text-2xl text-center lg:text-4xl text-teal-700 font-bold ">
           Manage Users

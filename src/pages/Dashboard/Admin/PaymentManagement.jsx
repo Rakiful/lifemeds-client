@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { FaCheckCircle } from "react-icons/fa";
 import { Loading } from "../../../components/Loading/Loading";
 import { NoPaymentHistory } from "../../../components/NoPaymentHistory/NoPaymentHistory.jsx";
+import { Helmet } from "react-helmet-async";
 
 export const PaymentManagement = () => {
   const axiosSecure = useAxiosSecure();
@@ -39,6 +40,9 @@ export const PaymentManagement = () => {
 
   return (
     <div className="p-6">
+      <Helmet>
+        <title>Payment Management | LifeMeds</title>
+      </Helmet>
       <div>
         <h1 className="text-2xl text-center lg:text-4xl text-teal-700 font-bold">
           Payment Management
@@ -82,7 +86,7 @@ export const PaymentManagement = () => {
                   {order.paymentStatus === "pending" ? (
                     <button
                       onClick={() => handleAcceptPayment(order._id)}
-                      className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                      className="px-3 py-1 cursor-pointer bg-blue-600 text-white rounded hover:bg-blue-700"
                     >
                       Accept Payment
                     </button>
@@ -93,7 +97,6 @@ export const PaymentManagement = () => {
               </tr>
             ))}
           </tbody>
-          
         </table>
         {orders.length === 0 && <NoPaymentHistory />}
       </div>

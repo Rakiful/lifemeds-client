@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import { EmptyCart } from "./EmptyCart";
 import { Loading } from "../../components/Loading/Loading";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 export const Cart = () => {
   const axiosSecure = useAxiosSecure();
@@ -129,6 +130,9 @@ export const Cart = () => {
 
   return (
     <div className="p-5">
+      <Helmet>
+        <title>Cart | LifeMeds</title>
+      </Helmet>
       <div>
         <h1 className="text-2xl text-center lg:text-4xl text-teal-700 font-bold ">
           My Cart

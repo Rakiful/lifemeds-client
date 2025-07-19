@@ -4,6 +4,7 @@ import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { Loading } from "../../../components/Loading/Loading";
 import { MdCampaign } from "react-icons/md";
+import { Helmet } from "react-helmet-async";
 
 export const ManageAdvertisement = () => {
   const axiosSecure = useAxiosSecure();
@@ -40,6 +41,9 @@ export const ManageAdvertisement = () => {
 
   return (
     <div className="p-4">
+      <Helmet>
+        <title>Manage Advertisement | LifeMeds</title>
+      </Helmet>
       {/* Title */}
       <div>
         <h1 className="text-2xl text-center lg:text-4xl text-teal-700 font-bold">

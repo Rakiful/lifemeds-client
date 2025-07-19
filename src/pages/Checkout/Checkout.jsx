@@ -1,10 +1,14 @@
 import React from "react";
 import { OrderSummary } from "./OrderSummary";
 import { Payment } from "./Payment";
+import { Helmet } from "react-helmet-async";
 
 export const Checkout = () => {
   return (
     <div className="py-5">
+      <Helmet>
+        <title>Checkout | LifeMeds</title>
+      </Helmet>
       <div>
         <h1 className="text-2xl text-center lg:text-4xl text-teal-700 font-bold">
           Checkout

@@ -1,10 +1,14 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { FaBan, FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router";
 
 export const Forbidden = () => {
   return (
     <div className="h-screen w-full flex flex-col justify-center items-center bg-gray-100 px-4 text-center">
+      <Helmet>
+        <title>403 | LifeMeds</title>
+      </Helmet>
       <FaBan className="text-red-500 text-6xl mb-4" />
       <h1 className="text-4xl font-bold text-gray-800 mb-2">403 Forbidden</h1>
       <p className="text-lg text-gray-600 mb-6">

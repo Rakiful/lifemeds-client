@@ -17,6 +17,7 @@ import {
   FaCapsules,
 } from "react-icons/fa";
 import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 export const AdminHome = () => {
   const axiosSecure = useAxiosSecure();
@@ -51,6 +52,9 @@ export const AdminHome = () => {
 
   return (
     <div className="p-5">
+      <Helmet>
+        <title>Admin Dashboard | LifeMeds</title>
+      </Helmet>
       <div>
         <h1 className="text-2xl text-center lg:text-4xl text-black font-bold">
           📊 Admin Dashboard Overview

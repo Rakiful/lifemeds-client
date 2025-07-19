@@ -3,6 +3,7 @@ import jsPDF from "jspdf";
 import logo from "../../assets/web_logo.png";
 import { Navigate, useLocation } from "react-router";
 import { PreviewInvoice } from "./PreviewInvoice";
+import { Helmet } from "react-helmet-async";
 
 export const Invoice = () => {
   const [paymentStatus, setPaymentStatus] = useState("");
@@ -154,6 +155,9 @@ export const Invoice = () => {
 
   return (
     <div className="p-5">
+      <Helmet>
+        <title>Invoice | LifeMeds</title>
+      </Helmet>
       <div className="flex justify-center">
         <button
           onClick={handleDownloadPDF}

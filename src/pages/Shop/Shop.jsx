@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAxiosSecure } from "../../hooks/useAxiosSecure";
 import { Loading } from "../../components/Loading/Loading";
 import { useAuth } from "../../hooks/useAuth";
+import  {Helmet}  from 'react-helmet-async';
 import {
   FaCapsules,
   FaEye,
@@ -16,9 +17,7 @@ import {
   FaPercentage,
   FaNotesMedical,
   FaSearch,
-  FaSortAmountDown,
 } from "react-icons/fa";
-
 
 export const Shop = () => {
   const [selectedMedicine, setSelectedMedicine] = useState(null);
@@ -79,6 +78,9 @@ export const Shop = () => {
 
   return (
     <div className="p-4">
+       <Helmet>
+        <title>Shop | LifeMeds</title>
+      </Helmet>
       <div>
         <h1 className="text-2xl text-center lg:text-4xl text-teal-700 font-bold">
           Shop Medicines

@@ -4,6 +4,7 @@ import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
 import { utils, writeFile } from "xlsx";
 import { Loading } from "../../../components/Loading/Loading";
 import { FiAlertCircle } from "react-icons/fi";
+import { Helmet } from "react-helmet-async";
 
 export const SalesReport = () => {
   const axiosSecure = useAxiosSecure();
@@ -54,6 +55,9 @@ export const SalesReport = () => {
 
   return (
     <div className="p-4">
+      <Helmet>
+        <title>Sales Report | LifeMeds</title>
+      </Helmet>
       {/* Title */}
       <h1 className="text-2xl text-center lg:text-4xl text-teal-700 font-bold">
         Sales Report
@@ -113,7 +117,7 @@ export const SalesReport = () => {
                 <td>{index + 1}</td>
                 <td>
                   <img
-                    src={cat.categoryImage}
+                    src={cat.medicineImage}
                     alt={cat.medicineName}
                     className="w-12 h-12 object-cover rounded"
                   />
