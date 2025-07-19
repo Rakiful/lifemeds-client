@@ -31,6 +31,12 @@ export const Navbar = () => {
     }
   });
 
+  const handleLogOut = () => {
+    signOutUser().then((resp) => {
+      window.location.reload();
+    });
+  };
+
   const navLinks = (
     <>
       <li>
@@ -135,7 +141,7 @@ export const Navbar = () => {
                 <Link to={`/dashboard/${role}`}>Dashboard</Link>
               </li>
               <li>
-                <button onClick={signOutUser}>Logout</button>
+                <button onClick={handleLogOut}>Logout</button>
               </li>
             </ul>
           </div>

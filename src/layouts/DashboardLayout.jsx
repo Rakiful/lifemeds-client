@@ -1,130 +1,134 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
-import { FaHome } from "react-icons/fa";
+import {
+  FaHome,
+  FaCreditCard,
+  FaCapsules,
+  FaBullhorn,
+  FaUsersCog,
+  FaMoneyCheckAlt,
+  FaListAlt,
+  FaAd,
+  FaChartBar,
+} from "react-icons/fa";
 import { LifeMeds } from "../components/LifeMeds/LifeMeds";
 import { useUserRole } from "../hooks/useUserRole";
 
 export const DashboardLayout = () => {
   const { role } = useUserRole();
-  console.log(role);
+
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
         <div className="navbar w-full lg:hidden">
-          <div className="flex-none ">
+          <div className="flex-none">
             <label
               htmlFor="my-drawer-2"
-              aria-label="open sidebar"
               className="btn btn-square btn-ghost"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
+                className="inline-block h-6 w-6 stroke-current"
                 fill="none"
                 viewBox="0 0 24 24"
-                className="inline-block h-6 w-6 stroke-current"
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="M4 6h16M4 12h16M4 18h16"
-                ></path>
+                />
               </svg>
             </label>
           </div>
           <div className="mx-2 flex-1 px-2 lg:hidden">Dashboard</div>
         </div>
+
         <div className="min-h-[95vh] md:border border-teal-500 m-2 md:m-5 shadow-teal-200 md:shadow-2xl rounded-xl">
-          {/* Page content here */}
-          <Outlet></Outlet>
-          {/* Page content here */}
+          <Outlet />
         </div>
       </div>
+
+      {/* Sidebar */}
       <div className="drawer-side">
-        <label
-          htmlFor="my-drawer-2"
-          aria-label="close sidebar"
-          className="drawer-overlay"
-        ></label>
+        <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
         <ul className="menu bg-teal-500 text-white min-h-full w-[70%] lg:w-80 p-4">
-          {/* Sidebar content here */}
           <Link to={"/"} className="w-50 p-5">
             <LifeMeds />
           </Link>
 
           <li className="font-bold text-md">
-            <NavLink to="/dashboard">
+            <NavLink to={`/dashboard/${role}`}>
               <FaHome className="inline-block mr-2" />
               Home
             </NavLink>
           </li>
+
           {role === "user" && (
             <>
               <li>
                 <NavLink to="/dashboard/user/payment-history">
-                  <FaHome className="inline-block mr-2" />
+                  <FaCreditCard className="inline-block mr-2" />
                   Payment History
                 </NavLink>
               </li>
             </>
           )}
 
-          {/* Seller Links */}
           {role === "seller" && (
             <>
               <li>
                 <NavLink to="/dashboard/seller/manage-medicines">
-                  <FaHome className="inline-block mr-2" />
+                  <FaCapsules className="inline-block mr-2" />
                   Manage Medicines
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/dashboard/seller/payment-history">
-                  <FaHome className="inline-block mr-2" />
+                  <FaCreditCard className="inline-block mr-2" />
                   Payment History
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/dashboard/seller/ask-advertisement">
-                  <FaHome className="inline-block mr-2" />
+                  <FaBullhorn className="inline-block mr-2" />
                   Ask For Advertisement
                 </NavLink>
               </li>
             </>
           )}
 
-          {/* Admin Links */}
           {role === "admin" && (
             <>
               <li>
                 <NavLink to="/dashboard/admin/manage-users">
-                  <FaHome className="inline-block mr-2" />
+                  <FaUsersCog className="inline-block mr-2" />
                   Manage Users
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/dashboard/admin/payment-management">
-                  <FaHome className="inline-block mr-2" />
+                  <FaMoneyCheckAlt className="inline-block mr-2" />
                   Payment Management
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/dashboard/admin/manage-category">
-                  <FaHome className="inline-block mr-2" />
+                  <FaListAlt className="inline-block mr-2" />
                   Manage Category
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/dashboard/admin/manage-advertisement">
-                  <FaHome className="inline-block mr-2" />
+                  <FaAd className="inline-block mr-2" />
                   Manage Advertisement
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/dashboard/admin/sales-report">
-                  <FaHome className="inline-block mr-2" />
+                  <FaChartBar className="inline-block mr-2" />
                   Sales Report
                 </NavLink>
               </li>

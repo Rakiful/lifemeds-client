@@ -38,7 +38,7 @@ export const OrderSummary = () => {
         <table className="table">
           <thead className="bg-teal-100 ">
             <tr>
-              <th>Name</th>
+              <th>Medicine</th>
               <th>Company</th>
               <th>Unit Price</th>
               <th className="text-center">Quantity</th>
@@ -48,7 +48,10 @@ export const OrderSummary = () => {
           <tbody>
             {cartItems.map((item) => (
               <tr key={item.cartId}>
-                <td>{item.name}</td>
+                <td className="flex items-center gap-2">
+                  <img src={item.medicineImage} alt="" className="w-10" />
+                  <p>{item.medicineName}</p>
+                </td>
                 <td>{item.company}</td>
                 <td>${item.price}</td>
                 <td className="flex justify-center items-center gap-4">

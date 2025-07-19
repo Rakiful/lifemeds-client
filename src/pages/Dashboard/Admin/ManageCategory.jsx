@@ -1,8 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { FaTrash, FaEdit, FaPlusCircle } from "react-icons/fa";
+import { Loading } from "../../../components/Loading/Loading";
+import { useForm } from "react-hook-form";
 
 export const ManageCategory = () => {
   const axiosSecure = useAxiosSecure();
@@ -11,13 +13,77 @@ export const ManageCategory = () => {
 
   const [editData, setEditData] = useState(null);
 
-  const { data: categories = [], refetch } = useQuery({
+  const {
+    data: categories = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
       const res = await axiosSecure.get("/categories");
       return res.data;
     },
   });
+
+  // React Hook Form for Add
+  const {
+    register: registerAdd,
+    handleSubmit: handleSubmitAdd,
+    reset: resetAdd,
+    formState: { errors: errorsAdd },
+  } = useForm();
+
+  // React Hook Form for Edit
+  const {
+    register: registerEdit,
+    handleSubmit: handleSubmitEdit,
+    reset: resetEdit,
+    formState: { errors: errorsEdit },
+  } = useForm({
+    defaultValues: {
+      categoryName: "",
+      categoryImage: "",
+    },
+  });
+
+  // Whenever editData changes, reset edit form values
+  useEffect(() => {
+    if (editData) {
+      resetEdit({
+        categoryName: editData.categoryName || "",
+        categoryImage: editData.categoryImage || "",
+      });
+    }
+  }, [editData, resetEdit]);
+
+  const onAddCategory = async (data) => {
+    try {
+      const res = await axiosSecure.post("/categories", data);
+      if (res.data?.insertedId) {
+        Swal.fire("Success", "Category added successfully.", "success");
+        resetAdd();
+        addModalRef.current.checked = false;
+        refetch();
+      }
+    } catch (err) {
+      Swal.fire("Error", "Failed to add category.", "error");
+    }
+  };
+
+  const onEditCategory = async (data) => {
+    if (!editData) return;
+    try {
+      const res = await axiosSecure.put(`/categories/${editData._id}`, data);
+      if (res.data?.modifiedCount > 0) {
+        Swal.fire("Updated!", "Category updated successfully.", "success");
+        editModalRef.current.checked = false;
+        setEditData(null);
+        refetch();
+      }
+    } catch (err) {
+      Swal.fire("Error", "Failed to update category.", "error");
+    }
+  };
 
   const handleDelete = async (id) => {
     const confirm = await Swal.fire({
@@ -39,47 +105,7 @@ export const ManageCategory = () => {
     }
   };
 
-  const handleAddCategory = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const categoryName = form.categoryName.value.trim();
-    const categoryImage = form.categoryImage.value.trim();
-
-    if (!categoryName || !categoryImage) {
-      return Swal.fire("Error", "All fields are required.", "error");
-    }
-
-    const res = await axiosSecure.post("/categories", { categoryName, categoryImage });
-    if (res.data?.insertedId) {
-      Swal.fire("Success", "Category added successfully.", "success");
-      form.reset();
-      addModalRef.current.checked = false;
-      refetch();
-    }
-  };
-
-  const handleEditCategory = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const categoryName = form.categoryName.value.trim();
-    const categoryImage = form.categoryImage.value.trim();
-
-    if (!categoryName || !categoryImage) {
-      return Swal.fire("Error", "All fields are required.", "error");
-    }
-
-    const res = await axiosSecure.put(`/categories/${editData._id}`, {
-      categoryName,
-      categoryImage,
-    });
-
-    if (res.data?.modifiedCount > 0) {
-      Swal.fire("Updated!", "Category updated successfully.", "success");
-      editModalRef.current.checked = false;
-      setEditData(null);
-      refetch();
-    }
-  };
+  if (isLoading) return <Loading message="Fetching categories..." />;
 
   return (
     <div className="p-4">
@@ -146,58 +172,169 @@ export const ManageCategory = () => {
       </div>
 
       {/* Add Modal */}
-      <input type="checkbox" id="addCategoryModal" className="modal-toggle" ref={addModalRef} />
-      <div className="modal">
+      <input
+        type="checkbox"
+        id="addCategoryModal"
+        className="modal-toggle"
+        ref={addModalRef}
+      />
+      <div className="modal px-3">
         <div className="modal-box max-w-xl w-full">
-          <h3 className="font-bold text-xl mb-4 text-center">Add New Category</h3>
-          <form onSubmit={handleAddCategory} className="grid grid-cols-1 gap-4">
-            <input
-              name="categoryName"
-              type="text"
-              placeholder="Category Name"
-              className="input input-bordered"
-              required
-            />
-            <input
-              name="categoryImage"
-              type="url"
-              placeholder="Image URL"
-              className="input input-bordered"
-              required
-            />
+          <h3 className="font-bold text-xl mb-4 text-center">
+            Add New Category
+          </h3>
+          <form
+            onSubmit={handleSubmitAdd(onAddCategory)}
+            className="grid grid-cols-1 gap-4"
+            noValidate
+          >
+            <div>
+              <label
+                htmlFor="addCategoryName"
+                className="block mb-1 font-medium text-gray-700"
+              >
+                Category Name
+              </label>
+              <input
+                id="addCategoryName"
+                {...registerAdd("categoryName", {
+                  required: "Category name is required",
+                })}
+                type="text"
+                placeholder="Category Name"
+                className="input input-bordered w-full"
+              />
+              {errorsAdd.categoryName && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errorsAdd.categoryName.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="addCategoryImage"
+                className="block mb-1 font-medium text-gray-700"
+              >
+                Image URL
+              </label>
+              <input
+                id="addCategoryImage"
+                {...registerAdd("categoryImage", {
+                  required: "Image URL is required",
+                  pattern: {
+                    value:
+                      /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp|bmp|tiff))$/i,
+                    message: "Enter a valid image URL",
+                  },
+                })}
+                type="url"
+                placeholder="Image URL"
+                className="input input-bordered w-full"
+              />
+              {errorsAdd.categoryImage && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errorsAdd.categoryImage.message}
+                </p>
+              )}
+            </div>
+
             <div className="modal-action">
-              <label htmlFor="addCategoryModal" className="btn">Cancel</label>
-              <button type="submit" className="btn btn-primary">Add</button>
+              <label
+                htmlFor="addCategoryModal"
+                className="btn bg-red-500 text-white"
+                onClick={() => resetAdd()}
+              >
+                Cancel
+              </label>
+              <button type="submit" className="btn bg-teal-500 text-white">
+                Add
+              </button>
             </div>
           </form>
         </div>
       </div>
 
       {/* Edit Modal */}
-      <input type="checkbox" id="editCategoryModal" className="modal-toggle" ref={editModalRef} />
-      <div className="modal">
+      <input
+        type="checkbox"
+        id="editCategoryModal"
+        className="modal-toggle"
+        ref={editModalRef}
+      />
+      <div className="modal px-3">
         <div className="modal-box max-w-xl w-full">
           <h3 className="font-bold text-xl mb-4 text-center">Edit Category</h3>
-          <form onSubmit={handleEditCategory} className="grid grid-cols-1 gap-4">
-            <input
-              name="categoryName"
-              defaultValue={editData?.categoryName}
-              type="text"
-              placeholder="Category Name"
-              className="input input-bordered"
-              required
-            />
-            <input
-              name="categoryImage"
-              defaultValue={editData?.categoryImage}
-              type="url"
-              placeholder="Image URL"
-              className="input input-bordered"
-              required
-            />
+          <form
+            onSubmit={handleSubmitEdit(onEditCategory)}
+            className="grid grid-cols-1 gap-4"
+            noValidate
+          >
+            <div>
+              <label
+                htmlFor="editCategoryName"
+                className="block mb-1 font-medium text-gray-700"
+              >
+                Category Name
+              </label>
+              <input
+                id="editCategoryName"
+                {...registerEdit("categoryName", {
+                  required: "Category name is required",
+                })}
+                type="text"
+                placeholder="Category Name"
+                className="input input-bordered w-full"
+              />
+              {errorsEdit.categoryName && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errorsEdit.categoryName.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="editCategoryImage"
+                className="block mb-1 font-medium text-gray-700"
+              >
+                Image URL
+              </label>
+              <input
+                id="editCategoryImage"
+                {...registerEdit("categoryImage", {
+                  required: "Image URL is required",
+                  pattern: {
+                    value:
+                      /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp|bmp|tiff))$/i,
+                    message: "Enter a valid image URL",
+                  },
+                })}
+                type="url"
+                placeholder="Image URL"
+                className="input input-bordered w-full"
+              />
+              {errorsEdit.categoryImage && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errorsEdit.categoryImage.message}
+                </p>
+              )}
+            </div>
+
             <div className="modal-action">
-              <label htmlFor="editCategoryModal" className="btn">Cancel</label>
-              <button type="submit" className="btn btn-primary">Update</button>
+              <label
+                htmlFor="editCategoryModal"
+                className="btn bg-red-500 text-white"
+                onClick={() => {
+                  setEditData(null);
+                  resetEdit();
+                }}
+              >
+                Cancel
+              </label>
+              <button type="submit" className="btn bg-teal-500 text-white">
+                Update
+              </button>
             </div>
           </form>
         </div>

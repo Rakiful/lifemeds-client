@@ -4,6 +4,9 @@ import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
 import { useAuth } from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { FaPlusCircle } from "react-icons/fa";
+import { MdCampaign } from "react-icons/md";
+import { Loading } from "../../../components/Loading/Loading";
+import { useForm } from "react-hook-form";
 
 export const AskAdvertisement = () => {
   const axiosSecure = useAxiosSecure();
@@ -23,23 +26,20 @@ export const AskAdvertisement = () => {
     },
   });
 
-  const handleAddAd = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const medicineName = form.medicineName.value.trim();
-    const medicineImage = form.medicineImage.value.trim();
-    const description = form.description.value.trim();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-    if (!medicineImage || !description) {
-      return Swal.fire("Error", "All fields are required", "error");
-    }
-
+  const onSubmit = async (data) => {
     setLoading(true);
     const adData = {
       sellerEmail: user.email,
-      medicineImage,
-      medicineName,
-      description,
+      medicineName: data.medicineName.trim(),
+      medicineImage: data.medicineImage.trim(),
+      description: data.description.trim(),
       createdAt: new Date(),
     };
 
@@ -47,7 +47,7 @@ export const AskAdvertisement = () => {
       const res = await axiosSecure.post("/advertisements", adData);
       if (res.data?.insertedId) {
         Swal.fire("Success", "Ad request submitted!", "success");
-        form.reset();
+        reset();
         modalRef.current.checked = false;
         refetch();
       }
@@ -87,6 +87,8 @@ export const AskAdvertisement = () => {
       }
     }
   };
+
+  if (isLoading) return <Loading message="Fetching advertisement..." />;
 
   return (
     <div className="p-4">
@@ -143,13 +145,15 @@ export const AskAdvertisement = () => {
                   </span>
                 </td>
                 <td className="text-center">
-                  {ad.status === "pending" && (
+                  {ad.status === "pending" ? (
                     <button
                       onClick={() => handleCancel(ad._id)}
                       className="btn text-white bg-red-600"
                     >
                       Cancel
                     </button>
+                  ) : (
+                    <p>You Don't Have Permission To Cancel Approved Ads</p>
                   )}
                 </td>
               </tr>
@@ -157,9 +161,10 @@ export const AskAdvertisement = () => {
           </tbody>
         </table>
         {ads.length === 0 && !isLoading && (
-          <p className="text-center italic text-gray-500 py-8">
-            No advertisement requests found.
-          </p>
+          <div className="h-[50vh] flex flex-col items-center justify-center py-8 text-gray-500">
+            <MdCampaign className="text-7xl text-red-400 mb-2" />
+            <p className="text-center">No advertisement requests found.</p>
+          </div>
         )}
       </div>
 
@@ -170,40 +175,109 @@ export const AskAdvertisement = () => {
         className="modal-toggle"
         ref={modalRef}
       />
-      <div className="modal">
+      <div className="modal px-3">
         <div className="modal-box max-w-xl w-full">
           <h3 className="font-bold text-xl mb-4 text-center">
             Request Advertisement
           </h3>
-          <form onSubmit={handleAddAd} className="grid grid-cols-1 gap-4">
-            <input
-              name="medicineName"
-              type="text"
-              placeholder="Advertisement Medicine Name"
-              className="input input-bordered"
-              required
-            />
-            <input
-              name="medicineImage"
-              type="url"
-              placeholder="Advertisement Medicine Image URL"
-              className="input input-bordered"
-              required
-            />
-            <textarea
-              name="description"
-              placeholder="Short Description"
-              className="textarea textarea-bordered"
-              rows="3"
-              required
-            />
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="grid grid-cols-1 gap-4"
+            noValidate
+          >
+            {/* Medicine Name */}
+            <div>
+              <label htmlFor="medicineName" className="block mb-1 font-medium">
+                Advertisement Medicine Name
+              </label>
+              <input
+                id="medicineName"
+                {...register("medicineName", {
+                  required: "Medicine name is required",
+                  maxLength: {
+                    value: 100,
+                    message: "Maximum length is 100 characters",
+                  },
+                })}
+                type="text"
+                className={`input input-bordered w-full ${
+                  errors.medicineName ? "input-error" : ""
+                }`}
+                aria-invalid={errors.medicineName ? "true" : "false"}
+              />
+              {errors.medicineName && (
+                <p className="text-red-600 mt-1 text-sm">
+                  {errors.medicineName.message}
+                </p>
+              )}
+            </div>
+
+            {/* Medicine Image URL */}
+            <div>
+              <label htmlFor="medicineImage" className="block mb-1 font-medium">
+                Advertisement Medicine Image URL
+              </label>
+              <input
+                id="medicineImage"
+                {...register("medicineImage", {
+                  required: "Image URL is required",
+                  pattern: {
+                    value: /^https?:\/\/.+/,
+                    message: "Enter a valid URL",
+                  },
+                })}
+                type="url"
+                className={`input input-bordered w-full ${
+                  errors.medicineImage ? "input-error" : ""
+                }`}
+                aria-invalid={errors.medicineImage ? "true" : "false"}
+              />
+              {errors.medicineImage && (
+                <p className="text-red-600 mt-1 text-sm">
+                  {errors.medicineImage.message}
+                </p>
+              )}
+            </div>
+
+            {/* Description */}
+            <div>
+              <label htmlFor="description" className="block mb-1 font-medium">
+                Short Description
+              </label>
+              <textarea
+                id="description"
+                {...register("description", {
+                  required: "Description is required",
+                  maxLength: {
+                    value: 300,
+                    message: "Maximum length is 300 characters",
+                  },
+                })}
+                rows={3}
+                className={`textarea textarea-bordered w-full ${
+                  errors.description ? "textarea-error" : ""
+                }`}
+                aria-invalid={errors.description ? "true" : "false"}
+              />
+              {errors.description && (
+                <p className="text-red-600 mt-1 text-sm">
+                  {errors.description.message}
+                </p>
+              )}
+            </div>
+
             <div className="modal-action">
-              <label htmlFor="adModal" className="btn">
+              <label
+                htmlFor="adModal"
+                className="btn bg-red-500 text-white"
+                tabIndex={0}
+                onClick={() => reset()}
+              >
                 Cancel
               </label>
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="btn bg-teal-500 text-white"
                 disabled={loading}
               >
                 {loading ? "Submitting..." : "Submit"}

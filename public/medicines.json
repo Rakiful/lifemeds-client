@@ -1,0 +1,112 @@
+[
+  {
+    "name": "Napa",
+    "genericName": "Paracetamol",
+    "description": "Used for relief of fever and mild to moderate pain.",
+    "imageUrl": "https://i.ibb.co/VqpbZCy/napa.jpg",
+    "category": "Tablet",
+    "company": "Beximco Pharma",
+    "unit": "500mg",
+    "unitPrice": 2.5,
+    "discountOffer": 0
+  },
+  {
+    "name": "Seclo",
+    "genericName": "Omeprazole",
+    "description": "Used to reduce stomach acid and treat ulcers.",
+    "imageUrl": "https://i.ibb.co/8b6zpFH/seclo.jpg",
+    "category": "Capsule",
+    "company": "Square Pharmaceuticals",
+    "unit": "20mg",
+    "unitPrice": 5,
+    "discountOffer": 0
+  },
+  {
+    "name": "Ambrox",
+    "genericName": "Ambroxol Hydrochloride",
+    "description": "A mucolytic used to treat cough with thick mucus.",
+    "imageUrl": "https://i.ibb.co/6sLSw7Z/ambrox.jpg",
+    "category": "Syrup",
+    "company": "ACI Limited",
+    "unit": "100ml",
+    "unitPrice": 35,
+    "discountOffer": 0
+  },
+  {
+    "name": "Rupa",
+    "genericName": "Miconazole Nitrate",
+    "description": "Antifungal cream used for skin infections.",
+    "imageUrl": "https://i.ibb.co/KjrMqsZ/rupa.jpg",
+    "category": "Ointment",
+    "company": "Eskayef",
+    "unit": "15g",
+    "unitPrice": 18,
+    "discountOffer": 0
+  },
+  {
+    "name": "Metronidazole",
+    "genericName": "Metronidazole",
+    "description": "Used to treat bacterial and protozoal infections.",
+    "imageUrl": "https://i.ibb.co/hYgqxpy/metronidazole.jpg",
+    "category": "Tablet",
+    "company": "Incepta Pharma",
+    "unit": "400mg",
+    "unitPrice": 3,
+    "discountOffer": 0
+  },
+  {
+    "name": "Maxpro",
+    "genericName": "Esomeprazole",
+    "description": "Proton pump inhibitor for acid reflux and GERD.",
+    "imageUrl": "https://i.ibb.co/hRDnrVR/maxpro.jpg",
+    "category": "Tablet",
+    "company": "Incepta Pharma",
+    "unit": "20mg",
+    "unitPrice": 8,
+    "discountOffer": 0
+  },
+  {
+    "name": "Zimax",
+    "genericName": "Azithromycin",
+    "description": "An antibiotic used for various bacterial infections.",
+    "imageUrl": "https://i.ibb.co/FbbP2xG/zimax.jpg",
+    "category": "Tablet",
+    "company": "Renata Ltd.",
+    "unit": "500mg",
+    "unitPrice": 30,
+    "discountOffer": 0
+  },
+  {
+    "name": "Histacin",
+    "genericName": "Chlorpheniramine Maleate",
+    "description": "Used to relieve allergy symptoms such as runny nose.",
+    "imageUrl": "https://i.ibb.co/Fxz2P6y/histacin.jpg",
+    "category": "Tablet",
+    "company": "Acme Laboratories",
+    "unit": "4mg",
+    "unitPrice": 1,
+    "discountOffer": 0
+  },
+  {
+    "name": "Aristovit M",
+    "genericName": "Multivitamin & Minerals",
+    "description": "Supports overall health and nutritional balance.",
+    "imageUrl": "https://i.ibb.co/xH2TXPV/aristovit.jpg",
+    "category": "Tablet",
+    "company": "Aristopharma",
+    "unit": "1 tablet",
+    "unitPrice": 6,
+    "discountOffer": 0
+  },
+  {
+    "name": "Opton",
+    "genericName": "Carboxymethylcellulose Sodium",
+    "description": "Eye drops used to relieve dryness and irritation.",
+    "imageUrl": "https://i.ibb.co/3CNhGkC/opton.jpg",
+    "category": "Drop",
+    "company": "Opsonin Pharma",
+    "unit": "10ml",
+    "unitPrice": 45,
+    "discountOffer": 0
+  }
+]

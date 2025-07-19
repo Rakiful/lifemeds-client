@@ -96,7 +96,7 @@ export const CheckoutForm = () => {
           const newCart = {
             cartId: cart._id,
             medicineId: cart.medicineId,
-            medicineName: medicine?.name || "Unknown",
+            medicineName: medicine?.medicineName || "Unknown",
             price: medicine?.price || 0,
             quantity: cart.quantity,
           };

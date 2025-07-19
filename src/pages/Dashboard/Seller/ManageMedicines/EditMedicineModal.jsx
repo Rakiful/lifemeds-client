@@ -1,11 +1,11 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { useAxiosSecure } from "../../../../hooks/useAxiosSecure";
 import { useAuth } from "../../../../hooks/useAuth";
 
-export const AddMecineModal = ({ refetch }) => {
+export const EditMecineModal = ({ refetch, selectedMedicine }) => {
   const { user } = useAuth();
   const modalRef = useRef(null);
   const axiosSecure = useAxiosSecure();
@@ -14,8 +14,19 @@ export const AddMecineModal = ({ refetch }) => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    if (selectedMedicine) {
+      for (const key in selectedMedicine) {
+        if (selectedMedicine[key] !== undefined) {
+          setValue(key, selectedMedicine[key]);
+        }
+      }
+    }
+  }, [selectedMedicine, setValue]);
 
   const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
@@ -37,35 +48,33 @@ export const AddMecineModal = ({ refetch }) => {
     data.discount = parseFloat(data.discount || 0);
     data.price = parseFloat(data.price);
     data.sellerEmail = user.email;
-    data.createdAt = new Date();
 
     try {
-      const res = await axiosSecure.post("/medicines", data);
-      if (res.data.insertedId) {
-        Swal.fire("Success!", "Medicine added successfully!", "success");
+      const res = await axiosSecure.put(`/medicines/${selectedMedicine._id}`, data);
+      if (res.data.modifiedCount > 0) {
+        Swal.fire("Success!", "Medicine updated successfully!", "success");
         reset();
         modalRef.current.checked = false;
         refetch();
       }
     } catch (error) {
       console.error(error);
-      Swal.fire("Error", "Failed to add medicine.", "error");
+      Swal.fire("Error", "Failed to update medicine.", "error");
     }
   };
 
   return (
-    <div> 
-      <input type="checkbox" id="addMedicineModal" className="modal-toggle" ref={modalRef} />
+    <div>
+      <input type="checkbox" id="editMedicineModal" className="modal-toggle" ref={modalRef} />
       <div className="modal p-3">
         <div className="modal-box max-w-2xl w-full">
-          <h3 className="font-bold text-xl mb-4">Add New Medicine</h3>
+          <h3 className="font-bold text-xl mb-4">Edit Medicine</h3>
 
           <form
             noValidate
             onSubmit={handleSubmit(onSubmit)}
             className="grid grid-cols-1 md:grid-cols-2 gap-4"
           >
-            {/* Medicine Name */}
             <div>
               <label className="block mb-1 text-sm font-medium text-gray-700">Medicine Name</label>
               <input
@@ -76,7 +85,6 @@ export const AddMecineModal = ({ refetch }) => {
               {errors.medicineName && <p className="text-red-500 text-sm mt-1">{errors.medicineName.message}</p>}
             </div>
 
-            {/* Generic Name */}
             <div>
               <label className="block mb-1 text-sm font-medium text-gray-700">Generic Name</label>
               <input
@@ -87,7 +95,6 @@ export const AddMecineModal = ({ refetch }) => {
               {errors.genericName && <p className="text-red-500 text-sm mt-1">{errors.genericName.message}</p>}
             </div>
 
-            {/* Description */}
             <div className="md:col-span-2">
               <label className="block mb-1 text-sm font-medium text-gray-700">Description</label>
               <textarea
@@ -98,7 +105,6 @@ export const AddMecineModal = ({ refetch }) => {
               {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
             </div>
 
-            {/* Image URL */}
             <div>
               <label className="block mb-1 text-sm font-medium text-gray-700">Image URL</label>
               <input
@@ -109,7 +115,6 @@ export const AddMecineModal = ({ refetch }) => {
               {errors.medicineImage && <p className="text-red-500 text-sm mt-1">{errors.medicineImage.message}</p>}
             </div>
 
-            {/* Category */}
             <div>
               <label className="block mb-1 text-sm font-medium text-gray-700">Category</label>
               <select
@@ -126,7 +131,6 @@ export const AddMecineModal = ({ refetch }) => {
               {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category.message}</p>}
             </div>
 
-            {/* Company */}
             <div>
               <label className="block mb-1 text-sm font-medium text-gray-700">Company</label>
               <select
@@ -143,7 +147,6 @@ export const AddMecineModal = ({ refetch }) => {
               {errors.company && <p className="text-red-500 text-sm mt-1">{errors.company.message}</p>}
             </div>
 
-            {/* Unit */}
             <div>
               <label className="block mb-1 text-sm font-medium text-gray-700">Unit</label>
               <select
@@ -157,7 +160,6 @@ export const AddMecineModal = ({ refetch }) => {
               {errors.unit && <p className="text-red-500 text-sm mt-1">{errors.unit.message}</p>}
             </div>
 
-            {/* Price */}
             <div>
               <label className="block mb-1 text-sm font-medium text-gray-700">Price (per unit)</label>
               <input
@@ -169,25 +171,22 @@ export const AddMecineModal = ({ refetch }) => {
               {errors.price && <p className="text-red-500 text-sm mt-1">{errors.price.message}</p>}
             </div>
 
-            {/* Discount */}
             <div>
               <label className="block mb-1 text-sm font-medium text-gray-700">Discount (%)</label>
               <input
                 {...register("discount", { required: "Discount is required", valueAsNumber: true })}
                 type="number"
-                defaultValue={0}
                 className="input input-bordered w-full"
               />
               {errors.discount && <p className="text-red-500 text-sm mt-1">{errors.discount.message}</p>}
             </div>
 
-            {/* Action Buttons */}
             <div className="modal-action md:col-span-2 flex justify-end gap-2">
-              <label htmlFor="addMedicineModal" className="btn bg-red-500 text-white">
+              <label htmlFor="editMedicineModal" className="btn bg-red-500 text-white">
                 Cancel
               </label>
               <button type="submit" className="btn bg-teal-500 text-white">
-                Add Medicine
+                Update Medicine
               </button>
             </div>
           </form>

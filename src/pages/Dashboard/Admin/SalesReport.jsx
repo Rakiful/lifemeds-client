@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
 import { utils, writeFile } from "xlsx";
+import { Loading } from "../../../components/Loading/Loading";
+import { FiAlertCircle } from "react-icons/fi";
 
 export const SalesReport = () => {
   const axiosSecure = useAxiosSecure();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const { data: report = [] } = useQuery({
+  const { data: report = [], isLoading } = useQuery({
     queryKey: ["report"],
     queryFn: async () => {
       const res = await axiosSecure.get("/api/sales-report");
@@ -48,6 +50,8 @@ export const SalesReport = () => {
     writeFile(workbook, `sales-report-${new Date()}.xlsx`);
   };
 
+  if (isLoading) return <Loading message="Fetching categories..." />;
+
   return (
     <div className="p-4">
       {/* Title */}
@@ -76,12 +80,14 @@ export const SalesReport = () => {
             className="border rounded px-2 py-1"
           />
         </label>
-        <button
-          className="btn bg-teal-500 text-white"
-          onClick={handleDownloadXLSX}
-        >
-          Download XLSX
-        </button>
+        {filteredReport.length > 0 && (
+          <button
+            className="btn bg-teal-500 text-white"
+            onClick={handleDownloadXLSX}
+          >
+            Download XLSX
+          </button>
+        )}
       </div>
 
       {/* Table */}
@@ -102,46 +108,44 @@ export const SalesReport = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredReport.length === 0 ? (
-              <tr>
-                <td colSpan="10" className="text-center py-4 text-gray-500">
-                  No sales found in this date range.
+            {filteredReport.map((cat, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>
+                  <img
+                    src={cat.categoryImage}
+                    alt={cat.medicineName}
+                    className="w-12 h-12 object-cover rounded"
+                  />
+                </td>
+                <td>{cat.medicineName}</td>
+                <td>{cat.sellerEmail}</td>
+                <td>{cat.buyerEmail}</td>
+                <td>{cat.quantity}</td>
+                <td>$ {cat.price} </td>
+                <td>$ {cat.totalPrice.toFixed(2)}</td>
+                <td>{new Date(cat.orderDate).toISOString().split("T")[0]}</td>
+                <td>
+                  <span
+                    className={`px-2 py-1 rounded text-white ${
+                      cat.paymentStatus === "paid"
+                        ? "bg-green-500"
+                        : "bg-yellow-500"
+                    }`}
+                  >
+                    {cat.paymentStatus}
+                  </span>
                 </td>
               </tr>
-            ) : (
-              filteredReport.map((cat, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>
-                    <img
-                      src={cat.categoryImage}
-                      alt={cat.medicineName}
-                      className="w-12 h-12 object-cover rounded"
-                    />
-                  </td>
-                  <td>{cat.medicineName}</td>
-                  <td>{cat.sellerEmail}</td>
-                  <td>{cat.buyerEmail}</td>
-                  <td>{cat.quantity}</td>
-                  <td>$ {cat.price} </td>
-                  <td>$ {cat.totalPrice.toFixed(2)}</td>
-                  <td>{new Date(cat.orderDate).toISOString().split("T")[0]}</td>
-                  <td>
-                    <span
-                      className={`px-2 py-1 rounded text-white ${
-                        cat.paymentStatus === "paid"
-                          ? "bg-green-500"
-                          : "bg-yellow-500"
-                      }`}
-                    >
-                      {cat.paymentStatus}
-                    </span>
-                  </td>
-                </tr>
-              ))
-            )}
+            ))}
           </tbody>
         </table>
+        {filteredReport.length === 0 && (
+          <div className="h-[50vh] flex flex-col items-center justify-center gap-2 py-8 text-gray-500">
+            <FiAlertCircle className="text-4xl md:text-7xl text-red-400" />
+            <p>No sales found in this date range.</p>
+          </div>
+        )}
       </div>
     </div>
   );

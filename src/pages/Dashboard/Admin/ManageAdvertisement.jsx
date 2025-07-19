@@ -2,11 +2,17 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAxiosSecure } from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { Loading } from "../../../components/Loading/Loading";
+import { MdCampaign } from "react-icons/md";
 
 export const ManageAdvertisement = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: ads = [], refetch } = useQuery({
+  const {
+    data: ads = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["allAdvertisements"],
     queryFn: async () => {
       const res = await axiosSecure.get("/advertisements");
@@ -29,6 +35,8 @@ export const ManageAdvertisement = () => {
       Swal.fire("Error", "Failed to update slider status", "error");
     }
   };
+
+  if (isLoading) return <Loading message="Fetching advertisement..." />;
 
   return (
     <div className="p-4">
@@ -91,6 +99,12 @@ export const ManageAdvertisement = () => {
             ))}
           </tbody>
         </table>
+        {ads.length === 0 && (
+          <div className="h-[50vh] flex flex-col items-center justify-center py-8 text-gray-500">
+            <MdCampaign className="text-7xl text-red-400 mb-2" />
+            <p className="text-center">No advertisement requests found.</p>
+          </div>
+        )}
       </div>
     </div>
   );

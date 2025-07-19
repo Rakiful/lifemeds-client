@@ -26,11 +26,15 @@ import { ManageAdvertisement } from "../pages/Dashboard/Admin/ManageAdvertisemen
 import { Category } from "../pages/Category/Category";
 import { SalesReport } from "../pages/Dashboard/Admin/SalesReport";
 import { AdminHome } from "../pages/Dashboard/Admin/AdminHome";
+import { SellerHome } from "../pages/Dashboard/Seller/SellerHome";
+import { UserHome } from "../pages/Dashboard/User/UserHome";
+import { Errorpage } from "../components/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <Errorpage />,
     children: [
       {
         index: true,
@@ -138,7 +142,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "seller",
-        element: <Register />,
+        element: <SellerHome />,
       },
       {
         path: "seller/manage-medicines",
@@ -166,7 +170,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "user",
-        element: <Register />,
+        element: <UserHome />,
       },
       {
         path: "user/payment-history",

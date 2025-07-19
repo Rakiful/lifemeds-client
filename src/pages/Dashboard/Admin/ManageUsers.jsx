@@ -9,7 +9,7 @@ export const ManageUsers = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const email = user.email;
+  const adminEmail = user.email;
 
   const {
     data: users = [],
@@ -28,7 +28,7 @@ export const ManageUsers = () => {
     Swal.fire({
       title: `Are you sure?`,
       text: `Make ${user.name} a ${newRole}?`,
-      imageUrl: user.photo, // 👈 User's profile photo
+      imageUrl: user.photo,
       imageWidth: 80,
       imageHeight: 80,
       imageAlt: user.name,
@@ -85,38 +85,40 @@ export const ManageUsers = () => {
                 </td>
                 <td>{user.email}</td>
                 <td className="capitalize text-center">{user.role}</td>
-                <td className="space-x-2 flex justify-center">
-                  {email !== user.email && (
-                    <>
-                      {user.role !== "seller" && (
-                        <button
-                          className="btn btn-sm bg-teal-500 text-white"
-                          onClick={() => handleRoleChange(user, "seller")}
-                        >
-                          <FaUserTie className="mr-1" /> Make Seller
-                        </button>
-                      )}
-                      {user.role !== "admin" && (
-                        <button
-                          className="btn btn-sm bg-emerald-600 text-white"
-                          onClick={() => handleRoleChange(user, "admin")}
-                        >
-                          <FaUserShield className="mr-1" /> Make Admin
-                        </button>
-                      )}
-                      {(user.role === "seller" || user.role === "admin") && (
-                        <button
-                          className="btn btn-sm bg-gray-600 text-white"
-                          onClick={() => handleRoleChange(user, "user")}
-                        >
-                          <FaUser className="mr-1" /> Make User
-                        </button>
-                      )}{" "}
-                    </>
-                  )}
-                  {email === user.email && (
+                <td className="">
+                  {adminEmail === user.email && (
                     <p className="text-center">You Not Change Your Own Role</p>
                   )}
+                  <div className="flex justify-center items-center gap-2">
+                    {adminEmail !== user.email && (
+                      <>
+                        {user.role !== "seller" && (
+                          <button
+                            className="btn btn-sm bg-teal-500 text-white"
+                            onClick={() => handleRoleChange(user, "seller")}
+                          >
+                            <FaUserTie className="mr-1" /> Make Seller
+                          </button>
+                        )}
+                        {user.role !== "admin" && (
+                          <button
+                            className="btn btn-sm bg-emerald-600 text-white"
+                            onClick={() => handleRoleChange(user, "admin")}
+                          >
+                            <FaUserShield className="mr-1" /> Make Admin
+                          </button>
+                        )}
+                        {(user.role === "seller" || user.role === "admin") && (
+                          <button
+                            className="btn btn-sm bg-gray-600 text-white"
+                            onClick={() => handleRoleChange(user, "user")}
+                          >
+                            <FaUser className="mr-1" /> Make User
+                          </button>
+                        )}{" "}
+                      </>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}

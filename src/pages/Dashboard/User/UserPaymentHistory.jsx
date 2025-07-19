@@ -50,8 +50,17 @@ export const UserPaymentHistory = () => {
                 <td>{payment.transactionId}</td>
                 <td>{dayjs(payment.orderDate).format("YYYY-MM-DD hh:mm A")}</td>
                 <td>
-                  <span className={`px-2 py-1 rounded text-white bg-green-600`}>
+                  {/* <span className={`px-2 py-1 rounded text-white bg-green-600`}>
                     {payment.transactionId && "PAID"}
+                  </span> */}
+                  <span
+                    className={`px-2 py-1 rounded text-white ${
+                      payment.paymentStatus === "paid"
+                        ? "bg-green-600"
+                        : "bg-yellow-500"
+                    }`}
+                  >
+                    {payment.paymentStatus}
                   </span>
                 </td>
               </tr>
