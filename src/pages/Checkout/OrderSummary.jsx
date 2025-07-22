@@ -30,7 +30,7 @@ export const OrderSummary = () => {
     },
   });
 
-  console.log(cartItems);
+  // console.log(cartItems);
 
   return (
     <div>

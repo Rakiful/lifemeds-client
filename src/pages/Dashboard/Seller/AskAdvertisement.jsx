@@ -118,6 +118,7 @@ export const AskAdvertisement = () => {
             <tr>
               <th>#</th>
               <th>Image</th>
+              <th>Name</th>
               <th>Description</th>
               <th className="text-center">Status</th>
               <th className="text-center">Cancel Request</th>
@@ -134,6 +135,7 @@ export const AskAdvertisement = () => {
                     className="w-16 h-16 object-cover"
                   />
                 </td>
+                <td>{ad.medicineName}</td>
                 <td>{ad.description}</td>
                 <td className="text-center">
                   <span

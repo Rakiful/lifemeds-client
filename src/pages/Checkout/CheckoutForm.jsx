@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
@@ -10,8 +10,10 @@ import Swal from "sweetalert2";
 import payment_methods from "../../assets/icons/payment_methods.jpg";
 import stripe_logo from "../../assets/icons/stripe.png";
 import { Loading } from "../../components/Loading/Loading";
+import { Processing } from "../../components/Processing/Processing";
 
 export const CheckoutForm = () => {
+  const [processing, setProcessing] = useState(false);
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const stripe = useStripe();
@@ -26,7 +28,7 @@ export const CheckoutForm = () => {
     defaultValues: { name: user?.displayName, email: user?.email },
   });
 
-  const { data: cartItems = [],isLoading  } = useQuery({
+  const { data: cartItems = [], isLoading } = useQuery({
     queryKey: ["cart", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -56,6 +58,7 @@ export const CheckoutForm = () => {
     const card = elements.getElement(CardElement);
     if (!card) return;
 
+    setProcessing(true);
     try {
       const { data: paymentIntentRes } = await axiosSecure.post(
         "/create-payment-intent",
@@ -65,7 +68,6 @@ export const CheckoutForm = () => {
       );
 
       const { clientSecret } = paymentIntentRes;
-      console.log(clientSecret);
 
       const result = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
@@ -80,6 +82,7 @@ export const CheckoutForm = () => {
       });
 
       if (result.error) {
+        setProcessing(false);
         toast.error(result.error.message);
         Swal.fire({
           icon: "error",
@@ -115,10 +118,10 @@ export const CheckoutForm = () => {
           orderDate: new Date(),
         };
 
-        console.log(orderData);
+        // console.log(orderData);
 
         const dbOrder = await axiosSecure.post("/orders", orderData);
-        console.log(dbOrder);
+        // console.log(dbOrder);
         if (dbOrder) {
           Swal.fire({
             title: "Order placed successfully!",
@@ -126,7 +129,7 @@ export const CheckoutForm = () => {
             timer: 2000,
             showConfirmButton: false,
           });
-
+          setProcessing(false);
           navigate("/invoice", { state: orderData });
         }
       }
@@ -139,8 +142,8 @@ export const CheckoutForm = () => {
     }
   };
 
-  if(isLoading){
-    return <Loading/>
+  if (isLoading) {
+    return <Loading />;
   }
 
   if (cartItems.length === 0) {
@@ -149,13 +152,19 @@ export const CheckoutForm = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-teal-100 rounded-lg shadow">
+      <div>{processing && <Processing />}</div>
       <div className="flex justify-between items-center mb-5">
         <img className="w-20 md:w-30" src={stripe_logo} alt="" />
         <img className="w-40 md:w-60" src={payment_methods} alt="" />
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 grid md:grid-cols-2 gap-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-4 grid md:grid-cols-2 gap-4"
+      >
         <div>
-          <label>Name <span className="text-red-600">*</span></label>
+          <label>
+            Name <span className="text-red-600">*</span>
+          </label>
           <input
             {...register("name", { required: "Name is required" })}
             placeholder="Name"
@@ -167,7 +176,9 @@ export const CheckoutForm = () => {
         </div>
 
         <div>
-          <label>Email <span className="text-red-600">*</span></label>
+          <label>
+            Email <span className="text-red-600">*</span>
+          </label>
           <input
             {...register("email", { required: "Email is required" })}
             placeholder="Email"
@@ -180,7 +191,9 @@ export const CheckoutForm = () => {
         </div>
 
         <div>
-          <label>Phone <span className="text-red-600">*</span></label>
+          <label>
+            Phone <span className="text-red-600">*</span>
+          </label>
           <input
             {...register("phone", { required: "Phone is required" })}
             placeholder="Phone"
@@ -192,7 +205,9 @@ export const CheckoutForm = () => {
         </div>
 
         <div>
-          <label>Address <span className="text-red-600">*</span></label>
+          <label>
+            Address <span className="text-red-600">*</span>
+          </label>
           <input
             {...register("address", { required: "Address is required" })}
             placeholder="Address"
@@ -206,7 +221,7 @@ export const CheckoutForm = () => {
         </div>
 
         <div className="p-2 border rounded md:col-span-2">
-          <CardElement className="p-3 text-2xl"/>
+          <CardElement className="p-3 text-2xl" />
         </div>
 
         <button

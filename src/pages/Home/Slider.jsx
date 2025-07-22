@@ -28,12 +28,13 @@ export const Slider = () => {
       >
         {slides.map((item) => (
           <SwiperSlide key={item._id}>
-            <div className="w-full h-[80vh] from-teal-400 bg-gradient-to-br bg-teal-100 flex items-center justify-center">
+            <div className="w-full h-[80vh] from-teal-400 bg-gradient-to-br bg-teal-100 flex flex-col-reverse md:flex-row items-center justify-center">
               <div className="md:mt-[-60px] bg-opacity-40 space-y-4 flex flex-col p-4">
-                <LifeMeds />
-                <h2 className="text-2xl md:text-5xl font-bold">
-                  {item.medicineName}
-                </h2>
+                <div className="hidden md:inline">
+                  <LifeMeds />
+                </div>
+
+                <h2 className="text-5xl font-bold">{item.medicineName}</h2>
                 <p className="text-sm md:text-base text-gray-600 max-w-xl">
                   {item.description}
                 </p>
@@ -51,6 +52,9 @@ export const Slider = () => {
                     className="object-cover w-full h-full"
                   />
                 </div>
+              </div>
+              <div className="absolute top-0 md:hidden w-50 mt-10">
+                <LifeMeds />
               </div>
             </div>
           </SwiperSlide>

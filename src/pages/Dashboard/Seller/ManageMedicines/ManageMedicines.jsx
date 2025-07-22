@@ -6,7 +6,6 @@ import {
   FaEdit,
   FaPlusCircle,
   FaSearch,
-  FaSortAmountDown,
   FaTrash,
 } from "react-icons/fa";
 import { useAxiosSecure } from "../../../../hooks/useAxiosSecure";

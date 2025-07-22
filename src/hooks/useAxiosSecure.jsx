@@ -1,34 +1,27 @@
 import React from "react";
-import { useAuth } from "./useAuth";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import { useAuth } from "./useAuth";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3000/",
+  withCredentials: true,
 });
 
 export const useAxiosSecure = () => {
-  const { user, signOutUser, setLoading } = useAuth() ;
+  const { signOutUser, setLoading } = useAuth();
   const navigate = useNavigate();
 
   axiosInstance.interceptors.request.use((config) => {
-    const token = user?.accessToken || null;
-    if (token) {
-      config.headers.authorization = `Bearer ${token}`;
-    }
     return config;
   });
 
-  // response interceptor
   axiosInstance.interceptors.response.use(
-    (response) => {
-      return response;
-    },
+    (response) => response,
     (error) => {
-      console.log("Error in interceptor", error);
-      if (error.status === 401 || error.status === 403) {
+      // console.log(error);
+      if (error?.response?.status === 401 || error?.response?.status === 403) {
         signOutUser()
           .then(() => {
             Swal.fire({
@@ -39,7 +32,7 @@ export const useAxiosSecure = () => {
               navigate("/");
               setTimeout(() => {
                 window.location.reload();
-              }, 5000);
+              }, 10000);
             });
           })
           .catch((err) => console.error("Sign out error:", err));
@@ -48,5 +41,6 @@ export const useAxiosSecure = () => {
       return Promise.reject(error);
     }
   );
+
   return axiosInstance;
 };

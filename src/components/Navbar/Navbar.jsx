@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router";
+import { useQuery } from "@tanstack/react-query";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoGlobeOutline } from "react-icons/io5";
 import { Link } from "react-router";
@@ -10,7 +11,7 @@ import { useUserRole } from "../../hooks/useUserRole";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
+  // const [cartCount, setCartCount] = useState(0);
   const { user, signOutUser } = useAuth();
   const { role } = useUserRole();
   const { t, i18n } = useTranslation();
@@ -21,14 +22,14 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      fetch(`http://localhost:3000/cart/count/${user.email}`)
-        .then((resp) => resp.json())
-        .then((data) => {
-          setCartCount(data.count);
-        });
-    }
+  const { data: cartCount = 0, refetch } = useQuery({
+    queryKey: ["cartCount", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:3000/cart/count/${user.email}`);
+      const data = await res.json();
+      return data.count;
+    },
   });
 
   const handleLogOut = () => {

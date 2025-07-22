@@ -11,7 +11,6 @@ export const UserRoutes = ({ children }) => {
   if (loading || roleLoading) {
     return <Processing />;
   }
-  console.log("🧪 Checking role:", user?.email, "Role is:", role);
 
   if (!user || role !== "user") {
     return (

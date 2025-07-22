@@ -17,12 +17,11 @@ export const Cart = () => {
   const queryClient = useQueryClient();
 
   // Fetch cart items + merge with medicine data
-  const { data: cartItems = [], isLoading } = useQuery({
+  const { data: cartItems = [], isLoading ,refetch} = useQuery({
     queryKey: ["cart", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(`/cart/${user.email}`);
-      console.log(res.data);
       const medicinesRes = await axiosSecure.get("/medicines");
       const medicines = medicinesRes.data;
 
@@ -78,26 +77,13 @@ export const Cart = () => {
     onError: () => toast.error("Failed to remove item"),
   });
 
-  const clearCart = useMutation({
-    mutationFn: () => axiosSecure.delete(`/cart/clear/${user.email}`),
-    onSuccess: () => {
-      Swal.fire({
-        icon: "success",
-        title: "Cleared!",
-        text: "Your cart has been cleared.",
-        timer: 2000,
-        showConfirmButton: false,
-      });
-      queryClient.invalidateQueries(["cart", user?.email]);
-    },
-    onError: () => {
-      Swal.fire({
-        icon: "error",
-        title: "Oops!",
-        text: "Failed to clear cart.",
-      });
-    },
-  });
+  // Swal.fire({
+  //   icon: "success",
+  //   title: "Cleared!",
+  //   text: "Your cart has been cleared.",
+  //   timer: 2000,
+  //   showConfirmButton: false,
+  // });
 
   const handleClearCart = () => {
     Swal.fire({
@@ -110,7 +96,26 @@ export const Cart = () => {
       confirmButtonText: "Yes, clear it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        clearCart.mutate();
+        axiosSecure
+          .delete(`/cart/clear/${user.email}`)
+          .then((res) => {
+            Swal.fire({
+              icon: "success",
+              title: "Cleared!",
+              text: "Your cart has been cleared.",
+              timer: 2000,
+              showConfirmButton: false,
+            });
+            refetch()
+            queryClient.invalidateQueries(["cartCount", user?.email]);
+          })
+          .catch((err) => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops!",
+              text: "Failed to clear cart.",
+            });
+          });
       }
     });
   };
@@ -205,11 +210,7 @@ export const Cart = () => {
         </p>
 
         <div className="flex gap-4">
-          <button
-            className="btn btn-outline"
-            onClick={handleClearCart}
-            disabled={clearCart.isLoading}
-          >
+          <button className="btn btn-outline" onClick={handleClearCart}>
             Clear Cart
           </button>
 

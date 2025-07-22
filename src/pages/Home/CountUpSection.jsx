@@ -4,7 +4,7 @@ import { FaCapsules, FaUsers, FaStore, FaShoppingCart } from "react-icons/fa";
 
 export const CountUpSection = () => {
   return (
-    <div className="container mx-auto my-20 px-4">
+    <div className="container mx-auto my-10 px-4">
       <div>
         <h1 className="text-2xl text-center lg:text-4xl text-teal-700 font-bold ">
           Trusted by Thousands Nationwide

@@ -13,10 +13,10 @@ export const Home = () => {
         <title>LifeMeds</title>
       </Helmet>
       <Slider />
+      <CountUpSection />
       <CategoryCardSection />
       <DiscountProductsSlider />
       <FaqSection />
-      <CountUpSection />
     </div>
   );
 };

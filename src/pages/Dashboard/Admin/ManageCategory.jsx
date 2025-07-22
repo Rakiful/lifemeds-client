@@ -133,11 +133,11 @@ export const ManageCategory = () => {
 
       {/* Table */}
       <div className="overflow-x-auto shadow-md rounded-lg border border-gray-200">
-        <table className="table table-zebra w-full text-sm">
+        <table className="table table-zebra w-full text-sm text-center">
           <thead className="bg-teal-500 text-white">
             <tr>
               <th>#</th>
-              <th>Image</th>
+              <th className="text-start">Image</th>
               <th>Category Name</th>
               <th>Actions</th>
             </tr>
@@ -160,13 +160,13 @@ export const ManageCategory = () => {
                     className="btn btn-sm btn-warning mr-2"
                     onClick={() => setEditData(cat)}
                   >
-                    <FaEdit />
+                    <FaEdit /> Edit
                   </label>
                   <button
                     onClick={() => handleDelete(cat._id)}
                     className="btn btn-sm btn-error"
                   >
-                    <FaTrash />
+                    <FaTrash /> Delete
                   </button>
                 </td>
               </tr>

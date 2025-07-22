@@ -10,7 +10,7 @@ export const Invoice = () => {
   const [paymentStatusColor, setPaymentStatusColor] = useState("#08a100");
   const location = useLocation();
   const order = location.state;
-  console.log(order);
+  // console.log(order);
 
   if (!order) {
     return <Navigate to={"/checkout"}></Navigate>;

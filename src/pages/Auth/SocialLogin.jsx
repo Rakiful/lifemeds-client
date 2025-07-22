@@ -26,10 +26,10 @@ export const SocialLogin = () => {
         createdAt: result.user.metadata.creationTime,
         lastLogin : new Date()
       };
-      console.log("user info",userInfo)
+      // console.log("user info",userInfo)
 
       const userDB = await uploadUserToDB(userInfo);
-      console.log("after all complete : ", userDB);
+      // console.log("after all complete : ", userDB);
       Swal.fire({
         icon: "success",
         title: "Logged in successfully",

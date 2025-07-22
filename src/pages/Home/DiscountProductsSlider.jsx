@@ -4,24 +4,25 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { SingleProductCard } from "../../components/SingleProductCard/SingleProductCard";
+import { useAxiosSecure } from "../../hooks/useAxiosSecure";
 
 export const DiscountProductsSlider = () => {
+  const axiosSecure = useAxiosSecure()
   const {
     data: products = [],
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["discountProducts"],
+    queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch("/discountProducts.json");
-      if (!res.ok) throw new Error("Failed to fetch discount products");
-      return res.json();
+      const res = await axiosSecure.get("/discounted/medicines");
+      return res.data;
     },
   });
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Failed to load products. Try again later.</p>;
-  if (products.length === 0) return <p>No discounted products found.</p>;
+  if (products.length === 0) return <></>;
 
   return (
     <div className="py-10">
@@ -41,13 +42,13 @@ export const DiscountProductsSlider = () => {
           1024: { slidesPerView: 4 },
         }}
         autoplay={{ delay: 3000 }}
-        loop={products.length > 4 ? true : false}
+        loop={true}
         navigation
         modules={[Navigation, Pagination, Autoplay]}
         className="pb-10"
       >
         {products.map((item) => (
-          <SwiperSlide key={item.id}>
+          <SwiperSlide key={item._id}>
             <SingleProductCard item={item} />
           </SwiperSlide>
         ))}

@@ -30,7 +30,7 @@ export const FaqSection = () => {
     },
   ];
   return (
-    <div className="py-10 px-4 lg:px-10">
+    <div className="py-10 mb-10 px-4 lg:px-10">
       <div>
         <h1 className="text-2xl text-center lg:text-4xl text-teal-700 font-bold ">
           LifeMeds FAQs & Beginner Guide

@@ -15,3 +15,7 @@
   box-shadow: none !important;
   filter: none !important;
 }
+
+.navbar .active{
+  background-color: rgba(48, 240, 176, 0.407);
+}

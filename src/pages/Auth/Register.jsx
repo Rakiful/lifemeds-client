@@ -31,10 +31,10 @@ export const Register = () => {
       setProcessing(true);
       const { name, email, password, role, image } = data;
 
-      console.log(data);
+      // console.log(data);
 
       const user = await createUser(email, password);
-      console.log(user);
+      // console.log(user);
 
       if (!image || image.length === 0) {
         console.error("No profile image selected.");
@@ -61,7 +61,7 @@ export const Register = () => {
       const userDB = await uploadUserToDB(userInfo);
 
       setProcessing(false);
-      console.log("after all complete : ", userDB);
+      // console.log("after all complete : ", userDB);
       Swal.fire({
         title: "Registered successfully",
         icon: "success",
@@ -70,7 +70,7 @@ export const Register = () => {
       });
       navigate(from);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       setProcessing(false);
       if (err.message === "Firebase: Error (auth/email-already-in-use).") {
         var messege = "The Email Already Used";

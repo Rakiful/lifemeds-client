@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAxiosSecure } from "../../hooks/useAxiosSecure";
 import { Loading } from "../../components/Loading/Loading";
 import { useAuth } from "../../hooks/useAuth";
-import  {Helmet}  from 'react-helmet-async';
+import { Helmet } from "react-helmet-async";
 import {
   FaCapsules,
   FaEye,
@@ -18,6 +18,8 @@ import {
   FaNotesMedical,
   FaSearch,
 } from "react-icons/fa";
+import axios from "axios";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const Shop = () => {
   const [selectedMedicine, setSelectedMedicine] = useState(null);
@@ -29,17 +31,21 @@ export const Shop = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
+  const queryClient = useQueryClient();
+
   const { data: medicines = [], isLoading } = useQuery({
     queryKey: ["medicines"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/medicines");
+      const res = await axios.get("http://localhost:3000/medicines", {
+        withCredentials: "include",
+      });
       return res.data;
     },
   });
 
   const handleAddToCart = async (item) => {
     const data = {
-      userEmail: user.email,
+      userEmail: user?.email,
       medicineId: item._id,
       quantity: 1,
       addedAt: new Date(),
@@ -49,6 +55,7 @@ export const Shop = () => {
       toast.success(`${item.medicineName} added to cart`, {
         position: "top-right",
       });
+      queryClient.invalidateQueries(["cartCount", user?.email]);
     }
     if (res.data.message) {
       toast.warning(`${item.medicineName} ${res.data.message}`, {
@@ -78,7 +85,7 @@ export const Shop = () => {
 
   return (
     <div className="p-4">
-       <Helmet>
+      <Helmet>
         <title>Shop | LifeMeds</title>
       </Helmet>
       <div>
