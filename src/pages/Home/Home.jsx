@@ -6,6 +6,7 @@ import { FaqSection } from "./FaqSection";
 import { CountUpSection } from "./CountUpSection";
 import { Helmet } from "react-helmet-async";
 import { Loading } from "../../components/Loading/Loading";
+import { Newsletter } from "./Newsletter";
 
 export const Home = () => {
   const [slides, setSlides] = useState(null);
@@ -16,8 +17,12 @@ export const Home = () => {
   useEffect(() => {
     Promise.all([
       fetch("http://localhost:3000/categories").then((res) => res.json()),
-      fetch("http://localhost:3000/discounted/medicines").then((res) => res.json()),
-      fetch("http://localhost:3000/advertisements/slider").then((res) => res.json()),
+      fetch("http://localhost:3000/discounted/medicines").then((res) =>
+        res.json()
+      ),
+      fetch("http://localhost:3000/advertisements/slider").then((res) =>
+        res.json()
+      ),
     ])
       .then(([categoriesData, productsData, slidesData]) => {
         setCategories(categoriesData);
@@ -45,6 +50,7 @@ export const Home = () => {
       <CategoryCardSection categories={categories || []} />
       <DiscountProductsSlider products={products || []} />
       <FaqSection />
+      <Newsletter />
     </div>
   );
 };
