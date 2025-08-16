@@ -20,6 +20,7 @@ import {
 } from "react-icons/fa";
 import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
 
 export const Shop = () => {
   const [selectedMedicine, setSelectedMedicine] = useState(null);
@@ -27,6 +28,8 @@ export const Shop = () => {
   const [sortOrder, setSortOrder] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+
+  const navigate = useNavigate()
 
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
@@ -44,6 +47,7 @@ export const Shop = () => {
   });
 
   const handleAddToCart = async (item) => {
+    if (!user) return navigate('/auth');
     const data = {
       userEmail: user?.email,
       medicineId: item._id,

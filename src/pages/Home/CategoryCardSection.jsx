@@ -1,17 +1,7 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
-export const CategoryCardSection = () => {
-  const [categories, setCategories] = useState([]);
+export const CategoryCardSection = ({ categories }) => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetch("http://localhost:3000/categories")
-      .then((res) => res.json())
-      .then((data) => setCategories(data))
-      .catch((err) => console.error("Error fetching categories:", err));
-  }, []);
-
   return (
     <div className="py-10 px-4  mx-auto">
       <div>

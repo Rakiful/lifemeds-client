@@ -1,20 +1,10 @@
-import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
 import { LifeMeds } from "../../components/LifeMeds/LifeMeds";
 
-export const Slider = () => {
-  const [slides, setSlides] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost:3000/advertisements/slider")
-      .then((res) => res.json())
-      .then((data) => setSlides(data))
-      .catch((err) => console.error("Error fetching slides:", err));
-  }, []);
-
+export const Slider = ({ slides }) => {
   if (slides.length === 0) return null;
 
   return (

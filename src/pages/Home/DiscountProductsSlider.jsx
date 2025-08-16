@@ -1,28 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { SingleProductCard } from "../../components/SingleProductCard/SingleProductCard";
-import { useAxiosSecure } from "../../hooks/useAxiosSecure";
 
-export const DiscountProductsSlider = () => {
-  const axiosSecure = useAxiosSecure()
-  const {
-    data: products = [],
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["products"],
-    queryFn: async () => {
-      const res = await axiosSecure.get("/discounted/medicines");
-      return res.data;
-    },
-  });
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Failed to load products. Try again later.</p>;
-  if (products.length === 0) return <></>;
+export const DiscountProductsSlider = ({ products }) => {
+  if (products.length === 0) return null;
 
   return (
     <div className="py-10">
