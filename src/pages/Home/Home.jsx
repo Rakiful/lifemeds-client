@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet-async";
 import { Loading } from "../../components/Loading/Loading";
 import { Newsletter } from "./Newsletter";
 import { RecentProducts } from "./RecentProducts";
+import { PartnersSection } from "./PartnersSection";
 
 export const Home = () => {
   const [slides, setSlides] = useState(null);
@@ -57,6 +58,7 @@ export const Home = () => {
       <DiscountProductsSlider products={products || []} />
       <RecentProducts products={recentProducts || []} />
       <FaqSection />
+      <PartnersSection/>
       <Newsletter />
     </div>
   );

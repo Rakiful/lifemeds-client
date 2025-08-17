@@ -19,63 +19,48 @@ export const Footer = () => {
   const { role } = useUserRole();
   return (
     <footer className="bg-teal-300 text-black pt-12 pb-6 rounded-2xl mb-3">
-      <div className="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {/* My Account */}
         <div>
           <div className="w-40 mb-4">
             <LifeMeds />
           </div>
 
-          <p className="text-sm mb-3">Subscribe to get health tips & offers</p>
-          <form className="flex flex-col space-y-2">
-            <input
-              type="email"
-              placeholder="Your email"
-              className="px-3 py-2 rounded text-black bg-white"
-            />
-            <button
-              type="button"
-              className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded"
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
-
-        {/* Contact Us */}
-        <div>
-          <h3 className="text-xl font-bold mb-4">Contact Us</h3>
-          <p className="text-sm mb-2">Email: mdrakifulislamjoy@gmail.com</p>
-          <p className="text-sm mb-2">Phone: +880 185 816 7083</p>
-          <div className="flex gap-4 mt-4">
-            <a
-              href="https://www.facebook.com/MdRakif143/"
-              target="blank"
-              className="hover:text-white"
-            >
-              <FaFacebookF />
-            </a>
-            <a
-              href="https://x.com/"
-              target="blank"
-              className="hover:text-white"
-            >
-              <FaTwitter />
-            </a>
-            <a
-              href="https://www.instagram.com/mdrakif143/"
-              target="blank"
-              className="hover:text-white"
-            >
-              <FaInstagram />
-            </a>
-            <a
-              href="mailto:mdrakifulislamjoy@gmail.com"
-              target="blank"
-              className="hover:text-white"
-            >
-              <FaEnvelope />
-            </a>
+          {/* Contact Us */}
+          <div>
+            <h3 className="text-xl font-bold mb-4">Contact Us</h3>
+            <p className="text-sm mb-2">Email: mdrakifulislamjoy@gmail.com</p>
+            <p className="text-sm mb-2">Phone: +880 185 816 7083</p>
+            <div className="flex gap-4 mt-4">
+              <a
+                href="https://www.facebook.com/MdRakif143/"
+                target="blank"
+                className="hover:text-white"
+              >
+                <FaFacebookF />
+              </a>
+              <a
+                href="https://x.com/"
+                target="blank"
+                className="hover:text-white"
+              >
+                <FaTwitter />
+              </a>
+              <a
+                href="https://www.instagram.com/mdrakif143/"
+                target="blank"
+                className="hover:text-white"
+              >
+                <FaInstagram />
+              </a>
+              <a
+                href="mailto:mdrakifulislamjoy@gmail.com"
+                target="blank"
+                className="hover:text-white"
+              >
+                <FaEnvelope />
+              </a>
+            </div>
           </div>
         </div>
 
