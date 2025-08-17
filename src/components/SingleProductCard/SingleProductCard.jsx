@@ -5,14 +5,16 @@ export const SingleProductCard = ({ item }) => {
   return (
     <div className="relative my-5 p-4 border border-teal-200 rounded-xl shadow hover:shadow-lg shadow-teal-300 transition-all">
       {/* Discount Badge */}
-      <div className="absolute top-0 left-0 w-13 h-13">
-        <div className="relative">
-          <img className="absolute" src={discount} alt="discount" />
-          <p className="absolute mt-4 ml-3 font-bold text-white text-md">
-            {item.discount || "1"}%
-          </p>
+      {item.discount > 0 && (
+        <div className="absolute top-0 left-0 w-13 h-13">
+          <div className="relative">
+            <img className="absolute" src={discount} alt="discount" />
+            <p className="absolute mt-4 ml-3 font-bold text-white text-md">
+              {item.discount || "1"}%
+            </p>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Product Image */}
       <img

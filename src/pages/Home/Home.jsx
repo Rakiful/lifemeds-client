@@ -7,11 +7,13 @@ import { CountUpSection } from "./CountUpSection";
 import { Helmet } from "react-helmet-async";
 import { Loading } from "../../components/Loading/Loading";
 import { Newsletter } from "./Newsletter";
+import { RecentProducts } from "./RecentProducts";
 
 export const Home = () => {
   const [slides, setSlides] = useState(null);
   const [categories, setCategories] = useState(null);
   const [products, setProducts] = useState(null);
+  const [recentProducts, setRecentProducts] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -20,13 +22,17 @@ export const Home = () => {
       fetch("http://localhost:3000/discounted/medicines").then((res) =>
         res.json()
       ),
+      fetch("http://localhost:3000/recent/medicines").then((res) =>
+        res.json()
+      ),
       fetch("http://localhost:3000/advertisements/slider").then((res) =>
         res.json()
       ),
     ])
-      .then(([categoriesData, productsData, slidesData]) => {
+      .then(([categoriesData, productsData, recentProductsData,slidesData]) => {
         setCategories(categoriesData);
         setProducts(productsData);
+        setRecentProducts(recentProductsData)
         setSlides(slidesData);
         setLoading(false);
       })
@@ -49,6 +55,7 @@ export const Home = () => {
       <CountUpSection />
       <CategoryCardSection categories={categories || []} />
       <DiscountProductsSlider products={products || []} />
+      <RecentProducts products={recentProducts || []} />
       <FaqSection />
       <Newsletter />
     </div>
