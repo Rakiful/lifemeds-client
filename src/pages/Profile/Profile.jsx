@@ -6,7 +6,18 @@ import Swal from "sweetalert2";
 import { useAuth } from "../../hooks/useAuth";
 import { Processing } from "../../components/Processing/Processing";
 import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
-import { FaEnvelope } from "react-icons/fa";
+import {
+  FaEnvelope,
+  FaUser,
+  FaPhone,
+  FaGlobe,
+  FaMapMarkerAlt,
+  FaTransgender,
+  FaLanguage,
+  FaClock,
+  FaEdit,
+  FaLock,
+} from "react-icons/fa";
 import { Loading } from "../../components/Loading/Loading";
 
 export const Profile = () => {
@@ -41,6 +52,7 @@ export const Profile = () => {
     defaultValues: {
       name: "",
       nickName: "",
+      phone: "",
       gender: "",
       country: "",
       address: "",
@@ -63,6 +75,7 @@ export const Profile = () => {
         name: userData.name || "",
         nickName: userData.nickName || "",
         gender: userData.gender || "",
+        phone: userData.phone || "",
         country: userData.country || "",
         address: userData.address || "",
         language: userData.language || "",
@@ -104,6 +117,7 @@ export const Profile = () => {
         nickName: data.nickName || userData?.nickName,
         gender: data.gender || userData?.gender,
         country: data.country || userData?.country,
+        phone: data.phone || userData?.phone,
         address: data.address || userData?.address,
         language: data.language || userData?.language,
         timezone: data.timezone || userData?.timezone,
@@ -173,18 +187,18 @@ export const Profile = () => {
         <div className="flex gap-2">
           {activeForm !== "profile" && (
             <button
-              className="btn bg-teal-500 text-white  btn-sm"
+              className="btn bg-teal-500 text-white btn-sm flex items-center gap-2"
               onClick={() => setActiveForm("profile")}
             >
-              Edit Profile
+              <FaEdit /> Edit Profile
             </button>
           )}
           {activeForm !== "password" && (
             <button
-              className="btn bg-teal-500 text-white  btn-sm"
+              className="btn bg-teal-500 text-white btn-sm flex items-center gap-2"
               onClick={() => setActiveForm("password")}
             >
-              Change Password
+              <FaLock /> Change Password
             </button>
           )}
           {activeForm && (
@@ -203,28 +217,36 @@ export const Profile = () => {
 
       {/* Middle Section: Profile Info */}
       <div className="bg-white shadow rounded-2xl p-6 space-y-4 h-full">
+        {/* Info View */}
         {activeForm !== "profile" && activeForm !== "password" && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-900">
-            <p className="bg-teal-50 p-3 rounded-xl">
-              <strong>Full Name:</strong> {userData?.name || "-"}
+            <p className="bg-teal-50 p-3 rounded-xl flex items-center gap-2">
+              <FaUser /> <strong>Full Name:</strong> {userData?.name || "-"}
             </p>
-            <p className="bg-teal-50 p-3 rounded-xl">
-              <strong>Nick Name:</strong> {userData?.nickName || "-"}
+            <p className="bg-teal-50 p-3 rounded-xl flex items-center gap-2">
+              <FaUser /> <strong>Nick Name:</strong> {userData?.nickName || "-"}
             </p>
-            <p className="bg-teal-50 p-3 rounded-xl">
-              <strong>Gender:</strong> {userData?.gender || "-"}
+            <p className="bg-teal-50 p-3 rounded-xl flex items-center gap-2">
+              <FaPhone /> <strong>Phone:</strong> {userData?.phone || "-"}
             </p>
-            <p className="bg-teal-50 p-3 rounded-xl">
-              <strong>Country:</strong> {userData?.country || "-"}
+            <p className="bg-teal-50 p-3 rounded-xl flex items-center gap-2">
+              <FaTransgender /> <strong>Gender:</strong>{" "}
+              {userData?.gender || "-"}
             </p>
-            <p className="bg-teal-50 p-3 rounded-xl">
-              <strong>Address:</strong> {userData?.address || "-"}
+            <p className="bg-teal-50 p-3 rounded-xl flex items-center gap-2">
+              <FaGlobe /> <strong>Country:</strong> {userData?.country || "-"}
             </p>
-            <p className="bg-teal-50 p-3 rounded-xl">
-              <strong>Language:</strong> {userData?.language || "-"}
+            <p className="bg-teal-50 p-3 rounded-xl flex items-center gap-2">
+              <FaMapMarkerAlt /> <strong>Address:</strong>{" "}
+              {userData?.address || "-"}
             </p>
-            <p className="bg-teal-50 p-3 rounded-xl">
-              <strong>Time Zone:</strong> {userData?.timezone || "-"}
+            <p className="bg-teal-50 p-3 rounded-xl flex items-center gap-2">
+              <FaLanguage /> <strong>Language:</strong>{" "}
+              {userData?.language || "-"}
+            </p>
+            <p className="bg-teal-50 p-3 rounded-xl flex items-center gap-2">
+              <FaClock /> <strong>Time Zone:</strong>{" "}
+              {userData?.timezone || "-"}
             </p>
           </div>
         )}
@@ -235,61 +257,132 @@ export const Profile = () => {
             onSubmit={handleProfileSubmit(onUpdateProfile)}
             className="grid grid-cols-1 md:grid-cols-2 gap-4"
           >
-            <input
-              {...registerProfile("name")}
-              placeholder="Full Name"
-              className="input w-full bg-teal-50"
-            />
-            <input
-              {...registerProfile("nickName")}
-              placeholder="Nick Name"
-              className="input input-bordered w-full"
-            />
-            <select
-              {...registerProfile("gender")}
-              className="select select-bordered w-full"
-            >
-              <option value="">Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-            <input
-              {...registerProfile("country")}
-              placeholder="Country"
-              className="input input-bordered w-full"
-            />
-            <input
-              {...registerProfile("address")}
-              placeholder="Address"
-              className="input input-bordered w-full"
-            />
-            <input
-              {...registerProfile("language")}
-              placeholder="Language"
-              className="input input-bordered w-full"
-            />
-            <input
-              {...registerProfile("timezone")}
-              placeholder="Time Zone"
-              className="input input-bordered w-full"
-            />
-            <input
-              type="file"
-              {...registerProfile("photo")}
-              onChange={(e) => {
-                registerProfile("photo").onChange(e);
-                handleImageChange(e);
-              }}
-              className="file-input file-input-bordered w-full col-span-2"
-            />
-            <button
-              type="submit"
-              className="btn bg-teal-500 text-white w-full col-span-2"
-              disabled={processingProfile}
-            >
-              {processingProfile ? "Updating..." : "Update Profile"}
-            </button>
+            {/* Full Name */}
+            <div>
+              <label className="text-sm font-medium flex items-center gap-1">
+                <FaUser /> Full Name
+              </label>
+              <input
+                {...registerProfile("name")}
+                placeholder="Full Name"
+                className="input w-full border-0 bg-teal-50"
+              />
+            </div>
+
+            {/* Nick Name */}
+            <div>
+              <label className="text-sm font-medium flex items-center gap-1">
+                <FaUser /> Nick Name
+              </label>
+              <input
+                {...registerProfile("nickName")}
+                placeholder="Nick Name"
+                className="input border-0 bg-teal-50 w-full"
+              />
+            </div>
+
+            {/* Phone */}
+            <div>
+              <label className="text-sm font-medium flex items-center gap-1">
+                <FaPhone /> Phone
+              </label>
+              <input
+                {...registerProfile("phone")}
+                placeholder="Phone"
+                className="input border-0 bg-teal-50 w-full"
+              />
+            </div>
+
+            {/* Gender */}
+            <div>
+              <label className="text-sm font-medium flex items-center gap-1">
+                <FaTransgender /> Gender
+              </label>
+              <select
+                {...registerProfile("gender")}
+                className="select border-0 bg-teal-50 w-full"
+              >
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            {/* Country */}
+            <div>
+              <label className="text-sm font-medium flex items-center gap-1">
+                <FaGlobe /> Country
+              </label>
+              <input
+                {...registerProfile("country")}
+                placeholder="Country"
+                className="input border-0 bg-teal-50 w-full"
+              />
+            </div>
+
+            {/* Address */}
+            <div>
+              <label className="text-sm font-medium flex items-center gap-1">
+                <FaMapMarkerAlt /> Address
+              </label>
+              <input
+                {...registerProfile("address")}
+                placeholder="Address"
+                className="input border-0 bg-teal-50 w-full"
+              />
+            </div>
+
+            {/* Language */}
+            <div>
+              <label className="text-sm font-medium flex items-center gap-1">
+                <FaLanguage /> Language
+              </label>
+              <input
+                {...registerProfile("language")}
+                placeholder="Language"
+                className="input border-0 bg-teal-50 w-full"
+              />
+            </div>
+
+            {/* Time Zone */}
+            <div>
+              <label className="text-sm font-medium flex items-center gap-1">
+                <FaClock /> Time Zone
+              </label>
+              <input
+                {...registerProfile("timezone")}
+                placeholder="Time Zone"
+                className="input border-0 bg-teal-50 w-full"
+              />
+            </div>
+
+            {/* Profile Photo */}
+            <div className="md:col-span-2">
+              <label className="text-sm font-medium flex items-center gap-1">
+                <FaUser /> Profile Photo
+              </label>
+              <input
+                type="file"
+                {...registerProfile("photo")}
+                onChange={(e) => {
+                  registerProfile("photo").onChange(e);
+                  handleImageChange(e);
+                }}
+                className="file-input border-0 bg-teal-50 w-full"
+              />
+            </div>
+
+            {/* Submit */}
+            <div className="md:col-span-2">
+              <button
+                type="submit"
+                className="btn bg-teal-500 text-white w-full"
+                disabled={processingProfile}
+              >
+                {processingProfile ? "Updating..." : "Update Profile"}
+              </button>
+            </div>
           </form>
         )}
 
@@ -299,7 +392,11 @@ export const Profile = () => {
             onSubmit={handlePasswordSubmit(onChangePassword)}
             className="grid grid-cols-1 md:grid-cols-2 gap-4"
           >
+            {/* Old Password */}
             <div>
+              <label className="text-sm font-medium flex items-center gap-1">
+                <FaLock /> Old Password
+              </label>
               <input
                 type="password"
                 {...registerPassword("oldPassword", {
@@ -311,16 +408,20 @@ export const Profile = () => {
                   },
                 })}
                 placeholder="Old Password"
-                className="input input-bordered w-full"
+                className="input border-0 bg-teal-50 w-full"
               />
               {passwordErrors.oldPassword && (
-                <p className="text-red-500 text-sm mt-2 col-span-2">
+                <p className="text-red-500 text-sm mt-2">
                   {passwordErrors.oldPassword.message}
                 </p>
               )}
             </div>
 
+            {/* New Password */}
             <div>
+              <label className="text-sm font-medium flex items-center gap-1">
+                <FaLock /> New Password
+              </label>
               <input
                 type="password"
                 {...registerPassword("newPassword", {
@@ -332,18 +433,19 @@ export const Profile = () => {
                   },
                 })}
                 placeholder="New Password"
-                className="input input-bordered w-full"
+                className="input border-0 bg-teal-50 w-full"
               />
               {passwordErrors.newPassword && (
-                <p className="text-red-500 text-sm mt-2 col-span-2">
+                <p className="text-red-500 text-sm mt-2">
                   {passwordErrors.newPassword.message}
                 </p>
               )}
             </div>
 
+            {/* Submit */}
             <button
               type="submit"
-              className="btn bg-teal-500 text-white w-full col-span-2"
+              className="btn bg-teal-500 text-white w-full md:col-span-2"
               disabled={processingPassword}
             >
               {processingPassword ? "Changing..." : "Change Password"}
@@ -355,7 +457,12 @@ export const Profile = () => {
       {/* Bottom Section: Email */}
       <div className="mt-4 flex items-center gap-2 bg-white p-4 rounded-lg shadow">
         <FaEnvelope className="text-teal-500" />
-        <p className="font-semibold">{userData?.email}</p>
+        <div className="md:flex justify-between w-full">
+          <p className="font-semibold">{userData?.email}</p>
+          <p className="text-black">
+            My Role : <strong className="capitalize">{userData?.role}</strong>{" "}
+          </p>
+        </div>
       </div>
     </div>
   );
