@@ -29,6 +29,7 @@ import { AdminHome } from "../pages/Dashboard/Admin/AdminHome";
 import { SellerHome } from "../pages/Dashboard/Seller/SellerHome";
 import { UserHome } from "../pages/Dashboard/User/UserHome";
 import { Errorpage } from "../components/ErrorPage/ErrorPage";
+import { Profile } from "../pages/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -179,6 +180,10 @@ export const router = createBrowserRouter([
             <UserPaymentHistory />
           </UserRoutes>
         ),
+      },
+      {
+        path: "profile",
+        element: <Profile/>,
       },
     ],
   },

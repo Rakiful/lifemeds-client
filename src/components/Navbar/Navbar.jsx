@@ -136,7 +136,7 @@ export const Navbar = () => {
             </div>
             <ul className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
               <li>
-                <Link to="/update-profile">Update Profile</Link>
+                <Link to="/dashboard/profile">Update Profile</Link>
               </li>
               <li>
                 <Link to={`/dashboard/${role}`}>Dashboard</Link>

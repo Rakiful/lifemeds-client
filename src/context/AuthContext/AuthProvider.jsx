@@ -9,6 +9,9 @@ import {
   signInWithPopup,
   signOut,
   updateProfile,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updatePassword,
 } from "firebase/auth";
 import { auth } from "../../firebase/firebase.init";
 import axios from "axios";
@@ -49,24 +52,44 @@ export const AuthProvider = ({ children }) => {
     return updateProfile(auth.currentUser, profile);
   };
 
+  // Change password
+  const changeUserPassword = async (oldPassword, newPassword) => {
+    if (!auth.currentUser) throw new Error("No user signed in");
+
+    const credential = EmailAuthProvider.credential(
+      auth.currentUser.email,
+      oldPassword
+    );
+
+    // Re-authenticate user
+    await reauthenticateWithCredential(auth.currentUser, credential);
+
+    // Update to new password
+    await updatePassword(auth.currentUser, newPassword);
+
+    // Refresh local user state
+    setUser({ ...auth.currentUser });
+  };
+
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       // console.log(currentUser);
       setUser(currentUser);
       setLoading(false);
-      if(currentUser?.email){
-        const userData = {email: currentUser.email};
-        axios.post(`http://localhost:3000/jwt`, userData, {
-          withCredentials: true
-        })
-        .then(res=>{
-          // console.log("token after jwt",res.data)
-          const token = res.data.token;
-          localStorage.setItem('token', token)
-        })
-        .catch(err=>{
-          // console.log(err)
-        })
+      if (currentUser?.email) {
+        const userData = { email: currentUser.email };
+        axios
+          .post(`http://localhost:3000/jwt`, userData, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            // console.log("token after jwt",res.data)
+            const token = res.data.token;
+            localStorage.setItem("token", token);
+          })
+          .catch((err) => {
+            // console.log(err)
+          });
       }
     });
     return () => {
@@ -84,6 +107,7 @@ export const AuthProvider = ({ children }) => {
     githubSignIn,
     userProfileUpdate,
     signOutUser,
+    changeUserPassword,
   };
 
   return (

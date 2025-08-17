@@ -10,6 +10,7 @@ import {
   FaListAlt,
   FaAd,
   FaChartBar,
+  FaUser,
 } from "react-icons/fa";
 import { LifeMeds } from "../components/LifeMeds/LifeMeds";
 import { useUserRole } from "../hooks/useUserRole";
@@ -24,10 +25,7 @@ export const DashboardLayout = () => {
         {/* Navbar */}
         <div className="navbar w-full lg:hidden">
           <div className="flex-none">
-            <label
-              htmlFor="my-drawer-2"
-              className="btn btn-square btn-ghost"
-            >
+            <label htmlFor="my-drawer-2" className="btn btn-square btn-ghost">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="inline-block h-6 w-6 stroke-current"
@@ -63,6 +61,13 @@ export const DashboardLayout = () => {
             <NavLink to={`/dashboard/${role}`}>
               <FaHome className="inline-block mr-2" />
               Home
+            </NavLink>
+          </li>
+
+          <li className="font-bold text-md">
+            <NavLink to={`/dashboard/profile`}>
+              <FaUser className="inline-block mr-2" />
+              Profile
             </NavLink>
           </li>
 

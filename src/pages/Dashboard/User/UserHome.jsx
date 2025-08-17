@@ -76,10 +76,10 @@ export const UserHome = () => {
         <title>User Dashboard | LifeMeds</title>
       </Helmet>
       <div>
-        <h1 className="text-2xl text-center lg:text-4xl text-black font-bold">
+        <h1 className="text-2xl text-center lg:text-4xl text-teal-700 font-bold">
           📊 User Dashboard Overview
         </h1>
-        <hr className="mt-3 mb-5 lg:mt-5 lg:mb-10 w-24 lg:w-40 text-black border-2 lg:border-3 rounded-2xl mx-auto" />
+        <hr className="mt-3 mb-5 lg:mt-5 lg:mb-10 w-24 lg:w-40 text-teal-700 border-2 lg:border-3 rounded-2xl mx-auto" />
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-10">
