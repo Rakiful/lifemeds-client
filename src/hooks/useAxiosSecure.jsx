@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { useAuth } from "./useAuth";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: "https://life-meds-server.vercel.app/",
   withCredentials: true,
 });
 

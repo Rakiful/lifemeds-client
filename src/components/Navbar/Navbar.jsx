@@ -26,7 +26,7 @@ export const Navbar = () => {
     queryKey: ["cartCount", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await fetch(`http://localhost:3000/cart/count/${user.email}`);
+      const res = await fetch(`https://life-meds-server.vercel.app/cart/count/${user.email}`);
       const data = await res.json();
       return data.count;
     },
@@ -45,6 +45,12 @@ export const Navbar = () => {
       </li>
       <li>
         <NavLink to="/shop">{t("nav.shop")}</NavLink>
+      </li>
+      <li>
+        <NavLink to="/about-us">{t("nav.aboutUs")}</NavLink>
+      </li>
+      <li>
+        <NavLink to="/contact">{t("nav.contact")}</NavLink>
       </li>
     </>
   );

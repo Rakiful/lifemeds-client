@@ -13,7 +13,7 @@ export const Newsletter = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post("http://localhost:3000/subscribers", {
+      const res = await axios.post("https://life-meds-server.vercel.app/subscribers", {
         email: data.email,
       });
 

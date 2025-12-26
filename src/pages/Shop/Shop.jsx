@@ -39,7 +39,7 @@ export const Shop = () => {
   const { data: medicines = [], isLoading } = useQuery({
     queryKey: ["medicines"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/medicines", {
+      const res = await axios.get("https://life-meds-server.vercel.app/medicines", {
         withCredentials: "include",
       });
       return res.data;

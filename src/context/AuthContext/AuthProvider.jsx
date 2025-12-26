@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }) => {
       if (currentUser?.email) {
         const userData = { email: currentUser.email };
         axios
-          .post(`http://localhost:3000/jwt`, userData, {
+          .post(`https://life-meds-server.vercel.app/jwt`, userData, {
             withCredentials: true,
           })
           .then((res) => {

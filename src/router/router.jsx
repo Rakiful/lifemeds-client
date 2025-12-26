@@ -30,6 +30,8 @@ import { SellerHome } from "../pages/Dashboard/Seller/SellerHome";
 import { UserHome } from "../pages/Dashboard/User/UserHome";
 import { Errorpage } from "../components/ErrorPage/ErrorPage";
 import { Profile } from "../pages/Profile/Profile";
+import { AboutUs } from "../pages/AboutUs/AboutUs";
+import { ContactUs } from "../pages/ContactUs/ContactUs";
 
 export const router = createBrowserRouter([
   {
@@ -44,6 +46,14 @@ export const router = createBrowserRouter([
       {
         path: "/shop",
         element: <Shop />,
+      },
+      {
+        path: "/about-us",
+        element: <AboutUs />,
+      },
+      {
+        path: "/contact",
+        element: <ContactUs />,
       },
       {
         path: "/category/:categoryName",

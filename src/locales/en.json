@@ -3,6 +3,10 @@
     "home": "Home",
     "shop": "Shop",
     "login": "Login",
-    "join": "Join Us"
+    "join": "Join Us",
+    "aboutUs": "About Us",
+    "contact": "Contact Us",
+    "cart": "Cart",
+    "dashboard": "Dashboard"
   }
 }

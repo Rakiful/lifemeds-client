@@ -5,7 +5,7 @@ export const postUserToDB = () => {
   const uploadUserToDB = async (user) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/users",
+        "https://life-meds-server.vercel.app/users",
         user
       );
       return response.data;

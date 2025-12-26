@@ -19,14 +19,14 @@ export const Home = () => {
 
   useEffect(() => {
     Promise.all([
-      fetch("http://localhost:3000/categories").then((res) => res.json()),
-      fetch("http://localhost:3000/discounted/medicines").then((res) =>
+      fetch("https://life-meds-server.vercel.app/categories").then((res) => res.json()),
+      fetch("https://life-meds-server.vercel.app/discounted/medicines").then((res) =>
         res.json()
       ),
-      fetch("http://localhost:3000/recent/medicines").then((res) =>
+      fetch("https://life-meds-server.vercel.app/recent/medicines").then((res) =>
         res.json()
       ),
-      fetch("http://localhost:3000/advertisements/slider").then((res) =>
+      fetch("https://life-meds-server.vercel.app/advertisements/slider").then((res) =>
         res.json()
       ),
     ])
